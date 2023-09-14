@@ -1,5 +1,5 @@
 class Twitter {
-    class Pair{
+    class Pair{//Pair class to associate tweet with post time
         int time;
         int tweetId;
         public Pair(int time, int tweetId){
@@ -8,9 +8,10 @@ class Twitter {
         }
     }
     HashMap<Integer,Set<Integer>> relationships; //user -> people user follows
-    HashMap<Integer,List<Pair>> tweetsByUser;
-    int limit;
-    int time;
+    HashMap<Integer,List<Pair>> tweetsByUser; //self explanatory
+    int limit; //number of recent tweets we need to fetch
+    int time; //timer
+    
     public Twitter() {
         relationships = new HashMap<>();
         tweetsByUser = new HashMap<>();
@@ -19,39 +20,42 @@ class Twitter {
     }
     
     public void postTweet(int userId, int tweetId) {
-        if(!relationships.containsKey(userId)){
+        if(!relationships.containsKey(userId)){ 
+            //if user doesnt exist, add to relationships and tweets maps
             relationships.put(userId, new HashSet<Integer>());
             tweetsByUser.put(userId, new ArrayList<Pair>());
         }
-        
+        //add tweet to user tweets list
         tweetsByUser.get(userId).add(new Pair(time,tweetId));
         time += 1;
     }
     
     public List<Integer> getNewsFeed(int userId) {
         List<Integer> usersInFeed = new ArrayList<>();
-        usersInFeed.add(userId);
+        usersInFeed.add(userId);//per requirement you can see your own tweets in feed
+        
         if(relationships.containsKey(userId)){
             for(int following : relationships.get(userId)){
-            usersInFeed.add(following);
-        }
-        
-        PriorityQueue<Pair> recentTweets = new PriorityQueue<Pair>((a,b) -> b.time - a.time);
-        
-        for(int user : usersInFeed){
-            for(Pair tweet : tweetsByUser.get(user)){
-                recentTweets.add(tweet);        
+                usersInFeed.add(following);
             }
-        }
         
-        List<Integer> recent10 = new ArrayList<>();
-        int limitTweets = limit;
-        while(!recentTweets.isEmpty() && limitTweets > 0){
-            recent10.add(recentTweets.poll().tweetId);
-            limitTweets--;
-        }
+            PriorityQueue<Pair> recentTweets = new PriorityQueue<Pair>((a,b) -> b.time - a.time);
         
-        return recent10;
+            for(int user : usersInFeed){
+                for(Pair tweet : tweetsByUser.get(user)){
+                    recentTweets.add(tweet);        
+                }
+            }
+            
+            List<Integer> recent10 = new ArrayList<>();
+            int limitTweets = limit;
+            
+            while(!recentTweets.isEmpty() && limitTweets > 0){
+                recent10.add(recentTweets.poll().tweetId);
+                limitTweets--;
+            }
+        
+            return recent10;
         }
         
         return new ArrayList<Integer>();
