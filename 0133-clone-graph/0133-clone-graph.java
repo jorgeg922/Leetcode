@@ -23,38 +23,28 @@ class Solution {
         if(node == null){
             return null;
         }
-        Map<Integer, Node> nodeMap = new HashMap<>();
+        
+        Map<Node, Node> nodeMap = new HashMap<>();
         
         Queue<Node> q = new LinkedList<>();   
         q.add(node);
         
-        Set<Integer> visited = new HashSet<>();
-        Set<Integer> inQueue = new HashSet<>();
+        nodeMap.put(node, new Node(node.val, new ArrayList()));
         
         while(!q.isEmpty()){
             Node curr = q.poll();
-            if(inQueue.contains(curr.val)){
-                inQueue.remove(curr.val);
-            }
-            if(!nodeMap.containsKey(curr.val)){
-                nodeMap.put(curr.val, new Node(curr.val));
-            }
             
             List<Node> neighbors = curr.neighbors;
             for(Node neighbor : neighbors){
-                if(!visited.contains(neighbor.val) && !inQueue.contains(neighbor.val)){
+                if(!nodeMap.containsKey(neighbor)){
+                    nodeMap.put(neighbor, new Node(neighbor.val, new ArrayList()));
                     q.add(neighbor);
-                    inQueue.add(neighbor.val);
                 }
-                
-                if(!nodeMap.containsKey(neighbor.val)){
-                    nodeMap.put(neighbor.val, new Node(neighbor.val));
-                }
-                nodeMap.get(curr.val).neighbors.add(nodeMap.get(neighbor.val));
+                nodeMap.get(curr).neighbors.add(nodeMap.get(neighbor));    
             }
-            visited.add(curr.val);
+            
         }
         
-        return nodeMap.get(node.val);
+        return nodeMap.get(node);
     }
 }
