@@ -1,8 +1,8 @@
 class WordDictionary {
     class Node{
-        HashMap<Character, Node> children;
-        
+        HashMap<Character, Node> children;        
         boolean isEndOfWord;
+        
         public Node(){
             children = new HashMap<>();
             isEndOfWord = false;
@@ -17,8 +17,7 @@ class WordDictionary {
     
     public void addWord(String word) {
         Node curr = root;
-        char[] chars = word.toCharArray();
-        for(char c : chars){
+        for(char c : word.toCharArray()){
             if(!curr.children.containsKey(c)){
                 curr.children.put(c, new Node());
             }
@@ -34,10 +33,10 @@ class WordDictionary {
     }
     
     public boolean searchInNode(String word, Node node){
-        char[] sb = word.toCharArray();
-        for(int i=0; i<sb.length; i++){
-            if(!node.children.containsKey(sb[i])){
-                if(sb[i] == '.'){
+        for(int i=0; i<word.length(); i++){
+            char c = word.charAt(i);
+            if(!node.children.containsKey(c)){
+                if(c == '.'){
                      for(char child : node.children.keySet()){
                         Node newNode = node.children.get(child);
                         if(searchInNode(word.substring(i+1),newNode)){
@@ -49,7 +48,7 @@ class WordDictionary {
                 return false;
             }
             else{
-                node = node.children.get(sb[i]);
+                node = node.children.get(c);
             }
         }
         
