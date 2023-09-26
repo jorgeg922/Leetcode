@@ -56,6 +56,10 @@ class Solution {
         }
         
         visited[row][col] = false;
+        
+        if(node.children.isEmpty()){
+            parent.children.remove(board[row][col]);
+        }
     }
     
     public boolean isValid(int row, int col, char[][] board){
