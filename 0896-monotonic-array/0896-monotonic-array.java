@@ -4,19 +4,28 @@ class Solution {
         int right = nums.length-1;
         
         if(nums[left] < nums[right]){
-            for(int i = left+1; i<nums.length; i++){
-                if(nums[i] < nums[left]){
-                    return false;
-                }
-                left++;
-            }
+            return verify(left,1,nums);
         }else{
-            for(int i = left+1; i<nums.length; i++){
-                if(nums[i] > nums[left]){
-                    return false;
-                }
-                left++;
+            return verify(left,-1,nums);
+        }
+    }
+    
+    public boolean verify(int index, int direction, int[] nums){
+        
+        for(int i = index+1; i<nums.length; i++){
+            switch(direction){
+                case -1:
+                    if(nums[i] > nums[index]){
+                        return false;
+                    }
+                    break;
+                case 1:
+                    if(nums[i] < nums[index]){
+                        return false;
+                    }
+                    break;
             }
+            index++;
         }
         
         return true;
