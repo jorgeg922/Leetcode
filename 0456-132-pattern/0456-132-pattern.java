@@ -17,7 +17,7 @@ class Solution {
                     stack.pop();
                 }
                 
-                 if(!stack.isEmpty() && stack.peek() < nums[i]){
+                if(!stack.isEmpty() && stack.peek() < nums[i]){
                     return true;
                 }
                 stack.push(nums[i]);
