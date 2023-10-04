@@ -44,7 +44,7 @@ class MyHashMap {
         }
     }
     
-    int buckets = 2333;
+    int buckets = 2069;
     List<Bucket> map;
     public MyHashMap() {
         map = new ArrayList<>();
