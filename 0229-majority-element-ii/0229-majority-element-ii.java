@@ -1,3 +1,4 @@
+//Boyer-Moore Algorithm
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
         Integer num1 = null;
