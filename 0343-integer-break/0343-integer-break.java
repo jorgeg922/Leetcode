@@ -20,7 +20,7 @@ class Solution {
         }
         
         int ans = num;
-        for (int i = 1; i < num; i++) {
+        for (int i = 2; i < num; i++) {
             ans = Math.max(ans, i * dp(num - i));
         }
         
