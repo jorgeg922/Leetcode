@@ -23,6 +23,7 @@ class Solution {
         }
         
         if(nums[index] == 0){
+            memo[index] = Visited.BAD;
             return false;
         }
         
