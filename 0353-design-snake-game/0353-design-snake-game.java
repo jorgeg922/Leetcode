@@ -40,7 +40,7 @@ class SnakeGame {
         if(headRow < 0 || headRow >= height || headCol < 0 || headCol >= width){
             return -1;
         }
-        
+        //is the snake contains the new head, and this new head is not the tail -> it means it will hit a body part
         if(snakeMap.contains(newHead) && !(newHead.getKey() == tail.getKey() && newHead.getValue() == tail.getValue()))         {
             return -1;
         }
