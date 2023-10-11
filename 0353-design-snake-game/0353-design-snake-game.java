@@ -41,7 +41,7 @@ class SnakeGame {
             return -1;
         }
         
-        if(snakeMap.contains(newHead) && (newHead.getKey() != tail.getKey() || newHead.getValue() != tail.getValue()))         {
+        if(snakeMap.contains(newHead) && !(newHead.getKey() == tail.getKey() && newHead.getValue() == tail.getValue()))         {
             return -1;
         }
            
