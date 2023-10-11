@@ -15,18 +15,14 @@ class Solution {
         if(currSum > target){
             return;
         }
-        
-        
+                
         for(int i=index; i<candidates.length; i++){
             if (i > index && candidates[i] == candidates[i - 1])
                 continue;
-            if(currSum + candidates[i] <= target){
-                
+            if(currSum + candidates[i] <= target){               
                     currList.add(candidates[i]);
                     backtrack(candidates, target, currSum+candidates[i],currList,i+1);
-                    currList.remove(currList.size()-1);
-                   
-                               
+                    currList.remove(currList.size()-1);                               
             }    
         }
     }
