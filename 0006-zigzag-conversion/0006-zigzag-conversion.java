@@ -11,17 +11,15 @@ class Solution {
         }
         
         int currRow = 0;
-        boolean goingDown = true;
+        boolean goingDown = false;
         
         for(int i=0; i<s.length(); i++){  
             char c = s.charAt(i);
             tmp.get(currRow).append(c);
             
-            if(currRow == numRows-1){
-                goingDown = false;
+            if(currRow == 0 || currRow == numRows-1){
+                goingDown = !goingDown;
                 
-            }else if(currRow == 0){
-                goingDown = true;
             }
             
             if(goingDown){
