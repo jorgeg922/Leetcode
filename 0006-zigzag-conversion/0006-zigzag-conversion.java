@@ -19,11 +19,9 @@ class Solution {
             
             if(currRow == numRows-1){
                 goingDown = false;
-                //currRow--;
                 
             }else if(currRow == 0){
                 goingDown = true;
-                //currRow++;
             }
             
             if(goingDown){
