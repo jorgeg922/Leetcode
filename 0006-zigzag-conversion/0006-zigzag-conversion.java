@@ -3,43 +3,41 @@ class Solution {
         if(numRows == 1){
             return s;
         }
-        List<List<Character>> tmp = new ArrayList<>();        
+        
+        List<StringBuilder> tmp = new ArrayList<>(); 
+        
         for(int i=0; i<numRows; i++){
-            tmp.add(new ArrayList<>());
+            tmp.add(new StringBuilder());
         }
         
-        int currRow = -1;
+        int currRow = 0;
         boolean goingDown = true;
-        for(int i=0; i<s.length(); i++){    
+        
+        for(int i=0; i<s.length(); i++){  
+            char c = s.charAt(i);
+            tmp.get(currRow).append(c);
+            
+            if(currRow == numRows-1){
+                goingDown = false;
+                //currRow--;
+                
+            }else if(currRow == 0){
+                goingDown = true;
+                //currRow++;
+            }
+            
             if(goingDown){
                 currRow++;
             }else{
                 currRow--;
             }
-            if(currRow == numRows){
-                goingDown = false;
-                currRow=numRows-1;
-                currRow--;
-                
-            }else if(currRow < 0){
-                goingDown = true;
-                currRow=0;
-                currRow++;
-            }
-                     
-            char c = s.charAt(i);
-            tmp.get(currRow).add(c);
-           
-            
         }
         
-        StringBuilder sb = new StringBuilder();
-        for(List<Character> line : tmp){
-            for(char c : line){
-                sb.append(c);
-            }
+        String ans = "";
+        for(StringBuilder line : tmp){
+            ans += line.toString();
         }
         
-        return sb.toString();
+        return ans;
     }
 }
