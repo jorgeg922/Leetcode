@@ -21,7 +21,7 @@ class Solution {
         int left = 0;
         int right = grouping.size()-1;
         
-        while(left < right){
+        while(left <= right){
             int mid = left + (right - left)/2;
             
             if(grouping.get(mid) == num){
@@ -29,7 +29,7 @@ class Solution {
             }
             
             if(grouping.get(mid) > target){
-                right = mid;
+                right = mid-1;
             }else{
                 left = mid + 1;
             }
