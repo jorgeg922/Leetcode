@@ -1,39 +1,37 @@
 class HitCounter {
-    ArrayList<Integer> hits;
+    Deque<Pair<Integer,Integer>> hits;
+    int totalHits;
     public HitCounter() {
-        hits = new ArrayList<>();
+        hits = new LinkedList<>();
+        totalHits = 0;
     }
     
     public void hit(int timestamp) {
-        hits.add(timestamp);
+        if(hits.isEmpty() || hits.getLast().getKey() != timestamp){
+            hits.addLast(new Pair<Integer,Integer>(timestamp,1));
+            totalHits+=1;
+            return;
+        }
+        
+        int prevHits = hits.getLast().getValue();
+        hits.removeLast();
+        hits.addLast(new Pair<Integer,Integer>(timestamp,prevHits+1));
+        totalHits+=1;
     }
     
     public int getHits(int timestamp) {
-        if(hits.size() == 0){
-            return 0;
-        }
-        int target = timestamp;
-        int left = 0;
-        int right = hits.size()-1;
-        
-        while(left < right){
-            int mid = left + (right - left)/2;
+        while(!hits.isEmpty()){
+            int diff = timestamp - hits.peekFirst().getKey();
             
-            if(hits.get(mid) > target){
-                right = mid-1;
+            if(diff >= 300){
+                totalHits -= hits.peekFirst().getValue();
+                hits.removeFirst();
             }else{
-                left = mid + 1;
+                break;
             }
         }
         
-        int cutoff = timestamp - 300;
-        int total = 0;
-        while(left >= 0 && hits.get(left) > cutoff){
-            total+=1;
-            left--;
-        }
-        
-        return total;
+        return totalHits;
     }
 }
 
