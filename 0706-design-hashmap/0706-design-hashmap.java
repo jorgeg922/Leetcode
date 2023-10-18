@@ -1,8 +1,8 @@
 class MyHashMap {
-    class Pair<U,V>{
-        U key;
+    class Pair<K,V> {
+        K key;
         V value;
-        public Pair(U key,V value){
+        public Pair(K key, V value){
             this.key = key;
             this.value = value;
         }
@@ -14,29 +14,29 @@ class MyHashMap {
             bucket = new LinkedList<>();
         }
         
-        public int get(int key){
+        public void put(Integer key, Integer value){    
             for(Pair<Integer,Integer> pair : bucket){
-                if(pair.key == key){
-                    return pair.value;
+                if(pair.key.equals(key)){
+                    pair.value = value;
+                    return;
+                }
+            }
+            Pair<Integer,Integer> newPair = new Pair<>(key,value);
+            bucket.add(newPair);
+        }
+        
+        public Integer get(Integer key){
+            for(Pair pair : bucket){
+                if(pair.key.equals(key)){
+                    return (Integer) pair.value;
                 }
             }
             return -1;
         }
         
-        public void put(int key, int value){
-            for(Pair<Integer,Integer> pair : bucket){
-                if(pair.key == key){
-                    pair.value = value;
-                    return;
-                }
-            }
-            
-            bucket.add(new Pair<Integer,Integer>(key,value));
-        }
-        
-        public void remove(int key){
-            for(Pair<Integer,Integer> pair : bucket){
-                if(pair.key == key){
+        public void remove(Integer key){
+            for(Pair pair : bucket){
+                if(pair.key.equals(key)){
                     bucket.remove(pair);
                     return;
                 }
@@ -44,28 +44,28 @@ class MyHashMap {
         }
     }
     
-    int buckets = 2069;
-    List<Bucket> map;
+    List<Bucket> buckets;
+    int size = 2069;
     public MyHashMap() {
-        map = new ArrayList<>();
-        for(int i=0; i<buckets; i++){
-            map.add(new Bucket());
+        buckets = new ArrayList<>();
+        for(int i=0; i<2069; i++){
+            buckets.add(new Bucket());
         }
     }
     
     public void put(int key, int value) {
-        int location = key%buckets;
-        map.get(location).put(key, value);
+        Bucket bucket = buckets.get(key%size);
+        bucket.put(key, value);
     }
     
     public int get(int key) {
-        int location = key%buckets;
-        return map.get(location).get(key);
+        Bucket bucket = buckets.get(key%size);
+        return bucket.get(key);
     }
     
     public void remove(int key) {
-        int location = key%buckets;
-        map.get(location).remove(key);
+        Bucket bucket =  buckets.get(key%size);
+        bucket.remove(key);
     }
 }
 
