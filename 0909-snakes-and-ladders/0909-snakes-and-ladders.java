@@ -34,19 +34,19 @@ class Solution {
                     int[] neighborCoordinates = map.get(neighbor);
                     int nrow = neighborCoordinates[0];
                     int ncol = neighborCoordinates[1];
-                    int destination = -1;
                     if(board[nrow][ncol] != -1){
                            if (!visited.contains(board[nrow][ncol])) {
-                              destination = board[nrow][ncol]; 
-                              
-                           }                     
-                    }else if(!visited.contains(neighbor)) {
-                              destination = neighbor; 
-                    }
+                              q.add(board[nrow][ncol]); 
+                               visited.add(board[nrow][ncol]);
+                           }
+                                                    
                                               
-                    if(destination != -1){
-                        q.add(destination);
-                        visited.add(destination);
+                    }else{   
+                        if (!visited.contains(neighbor)) {
+                              q.add(neighbor); 
+                            visited.add(neighbor);
+                           }
+                                              
                     }
                     /*int dest = board[nrow][ncol] == -1 ? neighbor : board[nrow][ncol];
 
