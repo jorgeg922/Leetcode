@@ -34,12 +34,26 @@ class Solution {
                     int[] neighborCoordinates = map.get(neighbor);
                     int nrow = neighborCoordinates[0];
                     int ncol = neighborCoordinates[1];
-                    int dest = board[nrow][ncol] == -1 ? neighbor : board[nrow][ncol];
+                    int destination = -1;
+                    if(board[nrow][ncol] != -1){
+                           if (!visited.contains(board[nrow][ncol])) {
+                              destination = board[nrow][ncol]; 
+                              
+                           }                     
+                    }else if(!visited.contains(neighbor)) {
+                              destination = neighbor; 
+                    }
+                                              
+                    if(destination != -1){
+                        q.add(destination);
+                        visited.add(destination);
+                    }
+                    /*int dest = board[nrow][ncol] == -1 ? neighbor : board[nrow][ncol];
 
                     if (!visited.contains(dest)) {
                         q.add(dest);
                         visited.add(dest); // Mark this position as visited
-                    }
+                    }*/
                    
                 }
                
