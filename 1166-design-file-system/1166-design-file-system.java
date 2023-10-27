@@ -18,27 +18,27 @@ class FileSystem {
     public boolean createPath(String path, int value) {
         String[] folders = path.split("/");
      
-        Trie folder = root;
-        for(int i=1; i<folders.length; i++){
-            if(folder.nodes.containsKey(folders[i])){
-                folder = folder.nodes.get(folders[i]);
-            }else if(!folder.nodes.containsKey(folders[i])){
-                if(i == folders.length-1){
-                    folder.nodes.put(folders[i],new Trie(folders[i]));
-                    folder = folder.nodes.get(folders[i]);
-                }else{
-                    return false;
-                }
-                
+        Trie paths = root;
+        for(int i=1; i<folders.length-1; i++){
+            String currFolder = folders[i];
+            
+            if(!paths.nodes.containsKey(currFolder)){
+                return false;
             }
+            
+            paths = paths.nodes.get(currFolder);
         }
         
-        if(folder.value != -1){
+        String lastFolder = folders[folders.length-1];
+        if(paths.nodes.containsKey(lastFolder)){
             return false;
         }
         
-        folder.value = value;
+        Trie newFolder = new Trie(lastFolder);
+        newFolder.value = value;
+        paths.nodes.put(lastFolder,newFolder);
         return true;
+        
         
         
     }
