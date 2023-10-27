@@ -1,34 +1,61 @@
 class FileSystem {
-    HashMap<String,Integer> existingPaths;
+    class Trie{
+        String path;
+        int value;
+        HashMap<String,Trie> nodes;
+        public Trie(String path){
+            this.path = path;
+            this.value = -1;
+            nodes = new HashMap<>();
+        }
+    }
+    
+    Trie root;
     public FileSystem() {
-        existingPaths = new HashMap<>();
+        root = new Trie("");
     }
     
     public boolean createPath(String path, int value) {
-        if(path.isBlank() || path.equals("/")){
+        String[] folders = path.split("/");
+     
+        Trie folder = root;
+        for(int i=1; i<folders.length; i++){
+            if(folder.nodes.containsKey(folders[i])){
+                folder = folder.nodes.get(folders[i]);
+            }else if(!folder.nodes.containsKey(folders[i])){
+                if(i == folders.length-1){
+                    folder.nodes.put(folders[i],new Trie(folders[i]));
+                    folder = folder.nodes.get(folders[i]);
+                }else{
+                    return false;
+                }
+                
+            }
+        }
+        
+        if(folder.value != -1){
             return false;
         }
         
-        if(existingPaths.containsKey(path)){
-            return false;
-        }
-        
-        int i = path.lastIndexOf("/");
-        String tmp = path.substring(0,i);
-        if(tmp.length() > 1 && !existingPaths.containsKey(tmp)){
-            return false;
-        }
-                    
-        existingPaths.put(path,value);
+        folder.value = value;
         return true;
+        
         
     }
     
     public int get(String path) {
-        if(existingPaths.containsKey(path)){
-            return existingPaths.get(path);
+        String[] folders = path.split("/");
+        Trie folder = root;
+        
+        for(int i=1; i<folders.length; i++){
+            if(!folder.nodes.containsKey(folders[i])){
+                return -1;
+            }    
+            folder = folder.nodes.get(folders[i]);
         }
-        return -1;
+        
+        return folder.value;
+        
     }
 }
 
