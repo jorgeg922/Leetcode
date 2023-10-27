@@ -17,7 +17,10 @@ class FileSystem {
     
     public boolean createPath(String path, int value) {
         String[] folders = path.split("/");
-     
+        if(folders.length < 1){
+            return false;
+        }
+        
         Trie paths = root;
         for(int i=1; i<folders.length-1; i++){
             String currFolder = folders[i];
