@@ -14,16 +14,11 @@ class FileSystem {
         }
         
         int i = path.lastIndexOf("/");
-        String tmp = path;
-        while(i > 0){
-            tmp = path.substring(0,i);
-            if(!existingPaths.containsKey(tmp)){
-                return false;
-            }
-            
-            i = tmp.lastIndexOf("/");
+        String tmp = path.substring(0,i);
+        if(tmp.length() > 1 && !existingPaths.containsKey(tmp)){
+            return false;
         }
-        
+                    
         existingPaths.put(path,value);
         return true;
         
