@@ -20,12 +20,12 @@ class Solution {
             public int compare(Character a, Character b){
                 for(int i=0; i<teamsSize; i++){
                     if(ranking.get(a)[i] != ranking.get(b)[i]){
-                        return ranking.get(a)[i]-ranking.get(b)[i];
+                        return ranking.get(b)[i]-ranking.get(a)[i];
                     }
                 }
                 
                 //if equals all throughout
-                return b.compareTo(a);
+                return a.compareTo(b);
             }
         });
     
@@ -38,6 +38,6 @@ class Solution {
             sb.append(sortedTeams.poll());
         }
         
-        return sb.reverse().toString();
+        return sb.toString();
     }     
 }
