@@ -19,10 +19,8 @@ class Solution {
         PriorityQueue<Character> sortedTeams = new PriorityQueue<>(new Comparator<>(){
             public int compare(Character a, Character b){
                 for(int i=0; i<teamsSize; i++){
-                    if(ranking.get(a)[i] > ranking.get(b)[i]){
-                        return 1;
-                    }else if(ranking.get(a)[i] < ranking.get(b)[i]){
-                        return -1;
+                    if(ranking.get(a)[i] != ranking.get(b)[i]){
+                        return ranking.get(a)[i]-ranking.get(b)[i];
                     }
                 }
                 
