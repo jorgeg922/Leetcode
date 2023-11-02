@@ -46,7 +46,7 @@ class Solution {
             visited[city] = true;
             reached++;
             for(int col=0; col<grid[0].length;col++){
-                if(grid[city][col] > -1 ){
+                if(grid[city][col] > -1 && !visited[col]){
                     int remDistance = dist + grid[city][col];
                     if(remDistance <= distance){
                         pq.add(new int[]{col,remDistance});
