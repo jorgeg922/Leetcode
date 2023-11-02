@@ -37,9 +37,9 @@ class Solution {
         int reached = 0;
         
         while(!pq.isEmpty()){
-            int[] element = pq.poll();
-            int city = element[0];
-            int dist = element[1];
+            int[] currNode = pq.poll();
+            int city = currNode[0];
+            int dist = currNode[1];
             if(visited[city]){
                 continue;
             }
