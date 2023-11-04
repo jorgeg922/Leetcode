@@ -1,34 +1,33 @@
 class Solution {
     public int longestStrChain(String[] words) {
-        Map<String,Integer> memo = new HashMap<>();
-        Set<String> wordsPresent = new HashSet<>();
-        Collections.addAll(wordsPresent, words);
-        int longestChain = 0;
+        HashMap<String, Integer> memo = new HashMap<>();
+        Set<String> uniques  = new HashSet<>();
+        Collections.addAll(uniques,words);
+        
+        int max = 0;
         for(String word : words){
-            longestChain = Math.max(longestChain, dfs(wordsPresent,memo,word));
+            max = Math.max(max, dfs(word, memo, uniques));
         }
-        return longestChain;
+        
+        return max;
     }
     
-    public int dfs(Set<String> words, Map<String,Integer> memo, String currentWord){
-        if(memo.containsKey(currentWord)){
-            return memo.get(currentWord);
+    public int dfs(String word, Map<String,Integer> memo, Set<String> uniques){
+        if(memo.containsKey(word)){
+            return memo.get(word);
         }
         int maxLen = 1;
-        StringBuilder sb = new StringBuilder(currentWord);
-        
-        for(int i=0; i<currentWord.length(); i++){
-            sb.deleteCharAt(i);
-            String newWord = sb.toString();
-            
-            if(words.contains(newWord)){
-                int currentLen = 1 + dfs(words,memo,newWord);
-                maxLen = Math.max(maxLen,currentLen);
+        StringBuilder sb = new StringBuilder(word);
+        for(int i=0; i<sb.length(); i++){
+            String newWord = sb.deleteCharAt(i).toString();
+            if(uniques.contains(newWord)){
+                int currLen = 1 + dfs(newWord, memo, uniques);
+                maxLen = Math.max(maxLen, currLen);
             }
-            sb.insert(i,currentWord.charAt(i));
+            sb.insert(i,word.charAt(i));
         }
-        memo.put(currentWord, maxLen);
         
-        return maxLen;
+        memo.put(word, maxLen);
+        return memo.get(word);
     }
 }
