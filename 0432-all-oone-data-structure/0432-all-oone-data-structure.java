@@ -76,18 +76,14 @@ class AllOne {
         node.set.remove(key);
         int newCount = node.count-1;
         
-        if(node.left.count != newCount){
-           
-              node.insertToLeft(new Node(key,newCount)); 
-           
-            
+        if(newCount >= 1){
+            if(node.left.count != newCount){
+                node.insertToLeft(new Node(key,newCount));                
+            }else{
+                node.left.set.add(key);
+            }
+            mapToKeys.put(key, node.left);
         }else{
-            node.left.set.add(key);
-        }
-        
-        mapToKeys.put(key,node.left);
-        if(node != head && node.left.count == 0){
-            node.left.remove();
             mapToKeys.remove(key);
         }
         
