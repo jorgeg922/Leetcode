@@ -1,109 +1,108 @@
 class AllOne {
     class Node{
-        Set<String> set = new HashSet<>();
-        int count;        
-        Node left;
-        Node right;
-        
-        public Node(String s, int count){
-            set.add(s);
-            this.count = count;
-            this.left = null;
-            this.right = null;
+        Node l;
+        Node r;
+        int count;
+        Set<String> set = new HashSet<String>();
+        public Node(String key, int count){
+            this.count = count;            
+            this.set.add(key);
         }
         
-        public void remove(){
-            this.left.right = this.right;
-            this.right.left = this.left;
-            this.right = null;
-            this.left = null;
+        public void removeNode(){
+            this.r.l = this.l;
+            this.l.r = this.r;
         }
         
         public void insertToRight(Node node){
-            Node tmp = this.right;
-            this.right = node;
-            node.left = this;
-            node.right = tmp;
-            tmp.left = node;
+            this.r.l = node;
+            node.r = this.r;
+            node.l = this;
+            this.r = node;
         }
         
         public void insertToLeft(Node node){
-            Node tmp = this.left;
-            this.left = node;
-            node.right = this;
-            tmp.right = node;
-            node.left = tmp;
+            this.l.r = node;
+            node.l = this.l;
+            node.r = this;
+            this.l = node;
         }
         
     }
     
-    Map<String, Node> mapToKeys;
+    Map<String,Node> keysMap = new HashMap<>();
     Node head;
     Node tail;
     public AllOne() {
-        mapToKeys = new HashMap<>();
         head = new Node("",-1);
-        tail = new Node("", -1);
-        head.right = tail;
-        tail.left = head;
+        tail = new Node("",-1);
+        head.r = tail;
+        tail.l = head;
     }
     
     public void inc(String key) {
         Node node = head;
-        if(mapToKeys.containsKey(key)){
-            node = mapToKeys.get(key);          
+        if(keysMap.containsKey(key)){
+            node = keysMap.get(key);
         }
+        
         node.set.remove(key);
-        int newCount = node==head?1:node.count+1;
         
-        if(node.right.count != newCount){
-            node.insertToRight(new Node(key,newCount));
+        int count = 0;
+        if(node == head){
+            count = 1;
         }else{
-            node.right.set.add(key);
+            count = node.count + 1;
         }
         
-        mapToKeys.put(key, node.right);
+        if(node.r.count != count){
+            node.insertToRight(new Node(key,count));
+        }else{
+           node.r.set.add(key); 
+        }
+            
+        
+
+        keysMap.put(key,node.r);
         if(node != head && node.set.isEmpty()){
-            node.remove();
+            node.removeNode();
         }
-        
-        
     }
     
     public void dec(String key) {
-        System.out.println(key);
-        Node node = mapToKeys.get(key);
+        Node node = keysMap.get(key);
         node.set.remove(key);
-        int newCount = node.count-1;
         
+        int newCount = node.count - 1;
         if(newCount >= 1){
-            if(node.left.count != newCount){
-                node.insertToLeft(new Node(key,newCount));                
-            }else{
-                node.left.set.add(key);
+            if(node.l.count != newCount){
+                node.l.insertToRight(new Node(key,newCount));
             }
-            mapToKeys.put(key, node.left);
+            
+            //node.l.set.add(key); //this is the newly added node - now the new curr node's left
+            keysMap.put(key,node.l);
         }else{
-            mapToKeys.remove(key);
+            keysMap.remove(key);
         }
         
         if(node.set.isEmpty()){
-            node.remove();
+            node.removeNode();
         }
+        
     }
     
     public String getMaxKey() {
-        if(head.right == tail){
+        if(tail.l == head){
             return "";
         }
-        return tail.left.set.iterator().next();
+        return tail.l.set.iterator().next();
     }
     
     public String getMinKey() {
-        if(tail.left == head){
+        if(head.r == tail){
             return "";
         }
-        return head.right.set.iterator().next();
+        return head.r.set.iterator().next();
     }
 }
 
