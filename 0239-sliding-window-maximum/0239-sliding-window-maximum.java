@@ -5,7 +5,6 @@ class Solution {
         Deque<Integer> maxInWindow = new LinkedList<Integer>(); //store indexes
         
         for(int i=0; i<nums.length; i++){
-            
             while(!maxInWindow.isEmpty() && nums[maxInWindow.getLast()] < nums[i]){
                 maxInWindow.pollLast();
             }
