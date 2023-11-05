@@ -15,7 +15,7 @@ class Solution {
         
         return Math.max(0, dp(0,0,0,0));
     }
-    
+    //two robots are walking at the same time
     public int dp(int r1, int c1, int r2 ,int c2){
         if(N == r1 || N == r2 || N == c1 || N == c2 || grid[r1][c1] == -1 || grid[r2][c2] == -1){
             return Integer.MIN_VALUE;
@@ -30,13 +30,12 @@ class Solution {
         }
         
         int ans = grid[r1][c1];
-        //if(c1 != c2){
-        //    ans+=grid[r2][c2];                
-        //}
         if (r1 != r2 || c1 != c2) {
             ans += grid[r2][c2];
         }
+        
         ans += Math.max(
+            //both down, both right, one down one right, one right one down
             Math.max(dp(r1+1, c1, r2+1, c2), dp(r1, c1+1, r2, c2+1)),
             Math.max(dp(r1+1, c1, r2, c2+1), dp(r1, c1+1, r2+1, c2))
         );
