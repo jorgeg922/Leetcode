@@ -4,11 +4,10 @@ class Solution {
         if(grid[0][1] > 1 && grid[1][0] > 1){
             return -1;
         }
-        
         int rows = grid.length;
         int cols = grid[0].length;
         
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[2] - b[2]);
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[2]-b[2]);
         pq.add(new int[]{0,0,0});
         
         boolean[][] visited = new boolean[rows][cols];
@@ -26,6 +25,7 @@ class Solution {
             if(visited[row][col]){
                 continue;
             }
+            
             visited[row][col] = true;
             
             for(int[] neighbor : neighbors){
@@ -35,7 +35,7 @@ class Solution {
                 if(newRow < 0 || newRow >= rows || newCol < 0 || newCol >= cols || visited[newRow][newCol]){
                     continue;
                 }
-                
+                               
                 if(grid[newRow][newCol] <= time + 1){
                     pq.add(new int[]{newRow,newCol,time+1});
                 }else{
@@ -46,10 +46,8 @@ class Solution {
                         pq.add(new int[]{newRow,newCol,grid[newRow][newCol]+1});
                     }
                 }
-                
             }
         }
-        
         return -1;
     }
 }
