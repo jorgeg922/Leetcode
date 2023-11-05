@@ -8,10 +8,8 @@ class Solution {
         memo = new int[N][N][N];
         
         for(int[][] layer : memo){
-            //for(int[][] sublayer : layer){
-                for(int[] row : layer){
-                  Arrays.fill(row, Integer.MIN_VALUE);   
-                //}
+            for(int[] row : layer){
+                Arrays.fill(row, Integer.MIN_VALUE);   
             }
         }
         
@@ -32,8 +30,11 @@ class Solution {
         }
         
         int ans = grid[r1][c1];
-        if(c1 != c2){
-            ans+=grid[r2][c2];                
+        //if(c1 != c2){
+        //    ans+=grid[r2][c2];                
+        //}
+        if (r1 != r2 || c1 != c2) {
+            ans += grid[r2][c2];
         }
         ans += Math.max(
             Math.max(dp(r1+1, c1, r2+1, c2), dp(r1, c1+1, r2, c2+1)),
