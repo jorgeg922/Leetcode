@@ -1,51 +1,42 @@
 class Solution {
     int rows;
     int cols;
+    int[][] grid;
     int[][] memo;
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
-        this.rows = obstacleGrid.length;
-        this.cols = obstacleGrid[0].length;
         
-        if(obstacleGrid[rows-1][cols-1]==1){
+        this.grid = obstacleGrid;
+        rows = grid.length;
+        cols = grid[0].length;
+        if(grid[rows-1][cols-1] == 1){
             return 0;
         }
-        
-        this.memo = new int[rows][cols];
-        for(int[] memoRow : memo){
-            Arrays.fill(memoRow,-1);
+        memo = new int[rows][cols];
+        for(int[] row : memo){
+            Arrays.fill(row,-1);
         }
-        
-        return dfs(rows-1,cols-1,obstacleGrid);
-        
-       
+        return dfs(rows-1,cols-1);
     }
     
-    public int dfs(int row, int col, int[][] obstacleGrid){
-        if(row==0 && col==0){
+    public int dfs(int row, int col){
+        if(row == 0 && col == 0){
             return 1;
         }
         
-        if(memo[row][col] > -1){
+        if(memo[row][col] != -1){
             return memo[row][col];
         }
         
         int paths = 0;
+        if(row-1 >= 0 && grid[row-1][col] != 1){
+            paths += dfs(row-1,col);
+        }
         
-        int[][] directions = new int[][]{{-1,0},{0,-1}};
-        
-        for(int i=0; i<2; i++){
-            int nextRow = row + directions[i][0];
-            int nextCol = col + directions[i][1];
-            
-            if(nextRow < 0 || nextRow >= rows || nextCol < 0 || nextCol >= cols || obstacleGrid[nextRow][nextCol]==1){
-                continue;
-            }
-            
-            paths += dfs(nextRow,nextCol,obstacleGrid);
+        if(col-1 >=0 && grid[row][col-1] != 1){
+            paths += dfs(row, col-1);
         }
         
         memo[row][col] = paths;
         return memo[row][col];
-        
     }
 }
