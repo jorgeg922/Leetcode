@@ -7,12 +7,14 @@ class Solution {
         while(left <= right){
             int mid = left + (right-left)/2;
             
-            min = Math.min(min, nums[mid]);
+            if(nums[mid] < min){
+                min = nums[mid];
+            }
             
-            if(nums[mid] <= nums[right]){
-                right = mid-1;
+            if(nums[mid] > nums[right]){
+                left = mid + 1;
             }else{
-                left = mid+1;
+                right = mid - 1;
             }
         }
         
