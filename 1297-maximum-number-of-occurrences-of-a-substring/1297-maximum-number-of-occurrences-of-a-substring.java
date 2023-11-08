@@ -1,40 +1,40 @@
 class Solution {
     public int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
-        Map<String,Integer> occurrences = new HashMap<>();
-        
-        int[] countLetters = new int[26];
-        
-        int countUnique = 0;
+        HashMap<String,Integer> occurrences = new HashMap<>();
+        int[] map = new int[26];
         int left = 0;
-        int right = 0;
-        int maxOcurreneces = 0;
+        int right= 0;
+        int uniques = 0;
+        int maxOccurences = 0;
         
         while(right < s.length()){
-            char r = s.charAt(right++);
-            countLetters[r-'a']++;
-            
-            if(countLetters[r-'a'] == 1){
-                countUnique++;
+            char c = s.charAt(right);
+            map[c-'a']++;
+            if(map[c-'a'] == 1){
+                uniques++;
             }
             
-            while((right-left) >= minSize && (right-left) <= maxSize){
-                if(countUnique <= maxLetters){
-                    String subs = s.substring(left,right);
-                    occurrences.put(subs, occurrences.getOrDefault(subs,0)+1);
-                    if(occurrences.get(subs) > maxOcurreneces){
-                        maxOcurreneces = occurrences.get(subs);
+            int len = right-left+1;
+            if(len >= minSize && len <= maxSize){
+                if(uniques <= maxLetters){
+                    String sub = s.substring(left,right+1);
+                    occurrences.put(sub, occurrences.getOrDefault(sub,0)+1);
+                    if(occurrences.get(sub) > maxOccurences){
+                        maxOccurences = occurrences.get(sub);
                     }
                 }
                 
-                char l = s.charAt(left++);
-                countLetters[l-'a']--;
-                
-                if(countLetters[l-'a']==0){
-                    countUnique--;
+                map[s.charAt(left)-'a']--;
+        
+                if(map[s.charAt(left)-'a']==0){
+                    uniques--;
                 }
+                
+                left++;
             }
+            right++;
         }
         
-        return maxOcurreneces;
+        return maxOccurences;
     }
 }
