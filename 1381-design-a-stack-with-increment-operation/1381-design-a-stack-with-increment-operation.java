@@ -1,32 +1,38 @@
 class CustomStack {
-    LinkedList<Integer> ll;
+    int[] stack;
+    int ptr=0;
     int maxSize;
-    
+    int currentSize;
     public CustomStack(int maxSize) {
         this.maxSize = maxSize;
-        this.ll = new LinkedList<>();
+        int currentSize = 0;
+        stack = new int[maxSize];
+        ptr = 0;
     }
     
     public void push(int x) {
-        if(ll.size() < maxSize){
-            ll.addLast(x);
-        }
+       if(currentSize < maxSize){
+           stack[ptr++] = x;
+           currentSize++;
+       }
     }
     
     public int pop() {
-        if(ll.isEmpty()){
+        if(currentSize == 0){
             return -1;
         }
-        return ll.pollLast();
+        
+        int top = stack[ptr-1];
+        ptr--;
+        currentSize--;
+        return top;
     }
     
     public void increment(int k, int val) {
-        if(ll.size() < k){
-            k = ll.size();
-        }
+        int num = Math.min(k, currentSize);
         
-        for(int i=0; i<k; i++){
-            ll.set(i,ll.get(i)+val);
+        for(int i=0; i<num; i++){
+            stack[i] += val;
         }
     }
 }
