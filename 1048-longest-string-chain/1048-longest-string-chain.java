@@ -1,33 +1,42 @@
 class Solution {
+    int N;
+    HashMap<String,Integer> memo;
+    Set<String> wordsPresent;
     public int longestStrChain(String[] words) {
-        HashMap<String, Integer> memo = new HashMap<>();
-        Set<String> uniques  = new HashSet<>();
-        Collections.addAll(uniques,words);
+        N = words.length;
+        memo = new HashMap<>();
+        wordsPresent = new HashSet<>();
         
-        int max = 0;
+        
         for(String word : words){
-            max = Math.max(max, dfs(word, memo, uniques));
+            wordsPresent.add(word);
+        }
+    
+        int maxChain = 0;
+        for(String word : words){
+            maxChain = Math.max(maxChain, dp(word));
         }
         
-        return max;
+        return maxChain;
     }
     
-    public int dfs(String word, Map<String,Integer> memo, Set<String> uniques){
+    public int dp(String word){
         if(memo.containsKey(word)){
             return memo.get(word);
         }
-        int maxLen = 1;
+        
+        int maxChain = 1;
         StringBuilder sb = new StringBuilder(word);
-        for(int i=0; i<sb.length(); i++){
+        for(int i=0; i<word.length(); i++){
             String newWord = sb.deleteCharAt(i).toString();
-            if(uniques.contains(newWord)){
-                int currLen = 1 + dfs(newWord, memo, uniques);
-                maxLen = Math.max(maxLen, currLen);
+            if(wordsPresent.contains(newWord)){
+                maxChain = Math.max(maxChain, dp(newWord)+1);
             }
             sb.insert(i,word.charAt(i));
         }
         
-        memo.put(word, maxLen);
-        return memo.get(word);
+        memo.put(word, maxChain);
+        return maxChain;
+        
     }
 }
