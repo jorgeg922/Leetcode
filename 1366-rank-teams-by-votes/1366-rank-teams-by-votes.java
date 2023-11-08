@@ -1,43 +1,46 @@
-class Solution {  
-    HashMap<Character,int[]> ranking = new HashMap<>();
+class Solution {
     public String rankTeams(String[] votes) {
-        int teamsSize = votes[0].length();
+        HashMap<Character,int[]> votesPerTeam = new HashMap<>();
+        int positions = votes[0].length();
+        
+        for(int i=0; i<positions; i++){
+            votesPerTeam.put(votes[0].charAt(i), new int[positions]);
+        }
+        
         for(String vote : votes){
-            int len = vote.length();
-            for(int i=0; i<len; i++){
-                char currentTeam = vote.charAt(i);
-                if(!ranking.containsKey(currentTeam)){
-                    ranking.put(currentTeam, new int[teamsSize]);
-                }
-                
-                int[] scores = ranking.get(currentTeam);
-                scores[i] += 1;
-                ranking.put(currentTeam,scores);
+            char[] currentVotes = vote.toCharArray();
+            for(int i=0; i<currentVotes.length; i++){
+                char team = currentVotes[i];
+                int[] teamVotes = votesPerTeam.get(team);
+                teamVotes[i]++;
+                votesPerTeam.put(team, teamVotes);
             }
         }
         
-        PriorityQueue<Character> sortedTeams = new PriorityQueue<>(new Comparator<>(){
+        PriorityQueue<Character> pq = new PriorityQueue<>(new Comparator<>(){
             public int compare(Character a, Character b){
-                for(int i=0; i<teamsSize; i++){
-                    if(ranking.get(a)[i] != ranking.get(b)[i]){
-                        return ranking.get(b)[i]-ranking.get(a)[i];
+                int[] teamAVotes = votesPerTeam.get(a);
+                int[] teamBVotes = votesPerTeam.get(b);
+                
+                for(int i=0; i<positions; i++){
+                    if(teamAVotes[i] != teamBVotes[i]){
+                        return teamBVotes[i] - teamAVotes[i];
                     }
                 }
                 
-                //if equals all throughout
                 return a.compareTo(b);
             }
         });
-    
-        for(Character team : ranking.keySet()){
-            sortedTeams.add(team);
+        
+        for(char t : votesPerTeam.keySet()){
+            pq.add(t);
         }
         
         StringBuilder sb = new StringBuilder();
-        while(!sortedTeams.isEmpty()){
-            sb.append(sortedTeams.poll());
+        while(!pq.isEmpty()){
+            sb.append(pq.poll());
         }
         
         return sb.toString();
-    }     
+    }
 }
