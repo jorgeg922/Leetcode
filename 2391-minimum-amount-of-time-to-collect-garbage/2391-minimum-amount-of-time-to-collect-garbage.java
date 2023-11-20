@@ -1,12 +1,10 @@
 class Solution {
     public int garbageCollection(String[] garbage, int[] travel) {
-        int paperTruckLocation =0;
-        //int paperTruckTravelTime = 0;
-        int metalTruckLocation =0;
-        //int metalTruckTravelTime =0;
-        int glassTruckLocation =0;
-        //int glassTruckTravelTime =0;
+        int paperTruckLocation = 0;
+        int metalTruckLocation = 0;
+        int glassTruckLocation = 0;
         int totalTravelTime = 0;
+        
         int[] travelTimes = new int[garbage.length];
         travelTimes[0] = 0;
         for(int i =1; i<garbage.length; i++){
