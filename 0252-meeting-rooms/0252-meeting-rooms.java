@@ -15,10 +15,7 @@ class Solution {
         });
         
         for(int i=1; i<intervals.length; i++){
-            int start = intervals[i][0];
-            int end = intervals[i][1];
-            
-            int prevStart = intervals[i-1][0];
+            int start = intervals[i][0];           
             int prevEnd = intervals[i-1][1];
             
             if(start < prevEnd){
