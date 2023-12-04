@@ -24,7 +24,7 @@ class Solution {
                 right = mid - 1;
             }
         }
-        //int index = (left+right)/2;
+        
         return s.substring(0,right);
        
     }
