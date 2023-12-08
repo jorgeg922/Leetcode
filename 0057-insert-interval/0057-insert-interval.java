@@ -25,12 +25,6 @@ class Solution {
             }
         }
         
-        int[][] ans = new int[reformed.size()][2];
-        int ptr = 0;
-        for(int[] interval : reformed){
-            ans[ptr++] = interval;
-        }
-        
-        return ans;
+        return reformed.toArray(new int[reformed.size()][2]);
     }
 }
