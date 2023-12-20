@@ -23,38 +23,43 @@ class Solution {
         if(node == null){
             return null;
         }
-        Map<Integer, Node> nodeMap = new HashMap<>();
         
-        Queue<Node> q = new LinkedList<>();   
+        HashMap<Integer, Node> map = new HashMap<>();
+        Queue<Node> q = new LinkedList<>();
         q.add(node);
-        
         Set<Integer> visited = new HashSet<>();
-        Set<Integer> inQueue = new HashSet<>();
+        Set<Integer> inQueue = new HashSet<>(); //keeps track of items in q in case it processes node with same neighbors
+        visited.add(node.val);
+        inQueue.add(node.val);
         
         while(!q.isEmpty()){
             Node curr = q.poll();
-            if(inQueue.contains(curr.val)){
-                inQueue.remove(curr.val);
-            }
-            if(!nodeMap.containsKey(curr.val)){
-                nodeMap.put(curr.val, new Node(curr.val));
-            }
+            inQueue.remove(curr.val);
             
-            List<Node> neighbors = curr.neighbors;
-            for(Node neighbor : neighbors){
-                if(!visited.contains(neighbor.val) && !inQueue.contains(neighbor.val)){
-                    q.add(neighbor);
-                    inQueue.add(neighbor.val);
+            if(!map.containsKey(curr.val)){
+                 map.put(curr.val, new Node(curr.val));
+            }
+           
+            
+            for(Node neighbor : curr.neighbors){
+               
+                if(!map.containsKey(neighbor.val)){
+                    map.put(neighbor.val, new Node(neighbor.val));
                 }
                 
-                if(!nodeMap.containsKey(neighbor.val)){
-                    nodeMap.put(neighbor.val, new Node(neighbor.val));
-                }
-                nodeMap.get(curr.val).neighbors.add(nodeMap.get(neighbor.val));
+                Node newNeighbor = map.get(neighbor.val);
+                
+                map.get(curr.val).neighbors.add(newNeighbor);
+                
+                if(!visited.contains(neighbor.val) && !inQueue.contains(neighbor.val)){
+                    q.add(neighbor);
+                    visited.add(neighbor.val);
+                    inQueue.add(neighbor.val);
+                }                
             }
-            visited.add(curr.val);
         }
         
-        return nodeMap.get(node.val);
+        
+      return map.get(node.val);  
     }
 }
