@@ -1,28 +1,26 @@
 class Solution {
     public int search(int[] nums, int target) {
-        int n = nums.length;
         int left = 0;
-        int right = n-1;
+        int right = nums.length-1;
         
         while(left <= right){
             int mid = left + (right-left)/2;
-            int val = nums[mid];
-            
-            if(val == target){
+            int midval = nums[mid];
+            if(midval==target){
                 return mid;
             }
             
-            if(val < nums[left]){
-               if(target > val && target <= nums[right]){
-                   left = mid + 1;
-               }else{
-                   right = mid - 1;
-               }
+            if(midval < nums[left]){//it is rotated
+                if(target > midval && target <= nums[right]){
+                    left = mid + 1;
+                }else{
+                    right = mid - 1;
+                }
             }else{
-                if(val > target && target >= nums[left]){
+                if(midval > target && target >= nums[left]){
                     right = mid - 1;
                 }else{
-                    left = mid+1;
+                    left = mid + 1;
                 }
             }
         }
