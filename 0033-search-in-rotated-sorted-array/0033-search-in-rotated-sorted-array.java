@@ -9,14 +9,15 @@ class Solution {
             if(midval==target){
                 return mid;
             }
-            
-            if(midval < nums[left]){//it is rotated
+            //identify which side is sorted
+            //work with the sorted side
+            if(midval < nums[left]){//it means the right side is sorted
                 if(target > midval && target <= nums[right]){
                     left = mid + 1;
                 }else{
                     right = mid - 1;
                 }
-            }else{
+            }else{//the left side is sorted
                 if(midval > target && target >= nums[left]){
                     right = mid - 1;
                 }else{
