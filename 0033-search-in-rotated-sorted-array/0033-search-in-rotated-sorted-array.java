@@ -11,17 +11,17 @@ class Solution {
                 return mid;
             }
             
-            if(nums[left] <= mid_val){
-                if(target < mid_val && target >= nums[left]){
-                    right = mid-1;
-                }else{
+            if(mid_val < nums[left]){
+                if(mid_val < target && target <= nums[right]){
                     left = mid+1;
+                }else{
+                    right = mid-1;
                 }
             }else{
-                if(target > mid_val && target <= nums[right]){
-                    left = mid+1;
-                }else{
+                if(mid_val > target && target >= nums[left]){
                     right = mid-1;
+                }else{
+                    left = mid+1;
                 }
             }
         }
