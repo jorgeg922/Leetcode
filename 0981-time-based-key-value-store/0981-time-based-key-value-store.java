@@ -19,13 +19,27 @@ class TimeMap {
         
         List<Pair<Integer, String>> values = dataStore.get(key);
         
-        for(int i=values.size()-1; i >=0; i--){
-            if(values.get(i).getKey() <= timestamp){
-                return values.get(i).getValue();
+        if(timestamp < values.get(0).getKey()){
+            return "";
+        }
+        
+        int left=0;
+        int right=values.size()-1;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            Pair<Integer, String> value = values.get(mid);
+
+            if (value.getKey() == timestamp) {
+                return value.getValue();
+            } else if (value.getKey() < timestamp) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
         
-        return "";
+        return right == -1 ? "" : values.get(right).getValue();
     }
 }
 
