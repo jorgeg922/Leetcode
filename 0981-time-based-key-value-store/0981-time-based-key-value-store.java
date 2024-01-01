@@ -1,45 +1,43 @@
 class TimeMap {
-    HashMap<String, List<Pair<Integer,String>>> dataStore;
+    HashMap<String,List<Pair<Integer,String>>> map;
     public TimeMap() {
-        dataStore = new HashMap<>();
+        map = new HashMap<>();
     }
     
     public void set(String key, String value, int timestamp) {
-        if(!dataStore.containsKey(key)){
-            dataStore.put(key, new ArrayList<>());
+        if(!map.containsKey(key)){
+            map.put(key, new ArrayList<Pair<Integer,String>>());
         }
         
-        dataStore.get(key).add(new Pair<Integer,String>(timestamp,value));
+        map.get(key).add(new Pair<>(timestamp,value));
     }
     
     public String get(String key, int timestamp) {
-        if(!dataStore.containsKey(key) || dataStore.get(key).size() == 0){
+        if(!map.containsKey(key)){
             return "";
         }
         
-        List<Pair<Integer, String>> values = dataStore.get(key);
+        List<Pair<Integer,String>> list = map.get(key);
         
-        if(timestamp < values.get(0).getKey()){
+        int left = 0;
+        int right = list.size()-1;
+        
+        if(list.size() == 0){
             return "";
         }
         
-        int left=0;
-        int right=values.size()-1;
-        
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            Pair<Integer, String> value = values.get(mid);
-
-            if (value.getKey() == timestamp) {
-                return value.getValue();
-            } else if (value.getKey() < timestamp) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
+        while(left < right){
+            int mid = left + (right-left+1)/2;
+            Pair<Integer,String> pair = list.get(mid);
+            
+            if(pair.getKey() <= timestamp){
+                left = mid;
+            }else{
+                right = mid-1;
             }
         }
         
-        return right == -1 ? "" : values.get(right).getValue();
+        return list.get(left).getKey() <= timestamp ? list.get(left).getValue() : "";
     }
 }
 
