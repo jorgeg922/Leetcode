@@ -1,9 +1,10 @@
 class Solution {
     HashMap<Integer,List<Integer>> graph;
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        HashMap<String,Integer> emailToUser = new HashMap<>();
         graph = new HashMap<>();
+        HashMap<String,Integer> emailToUser = new HashMap<>();        
         Set<Integer> visited = new HashSet<>();
+        
         for(int i=0; i<accounts.size(); i++){
             graph.put(i, new ArrayList<>());
             List<String> emails = accounts.get(i);
