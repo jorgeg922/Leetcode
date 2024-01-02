@@ -1,8 +1,7 @@
 class Solution {
-    HashMap<String,Integer> emailToUser;
     HashMap<Integer,List<Integer>> graph;
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        emailToUser = new HashMap<>();
+        HashMap<String,Integer> emailToUser = new HashMap<>();
         graph = new HashMap<>();
         Set<Integer> visited = new HashSet<>();
         for(int i=0; i<accounts.size(); i++){
