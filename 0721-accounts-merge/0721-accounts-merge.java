@@ -1,66 +1,52 @@
 class Solution {
-    HashSet<String> visited = new HashSet<>();
-    Map<String, List<String>> adjacent = new HashMap<String, List<String>>();
-    
-    private void DFS(List<String> mergedAccount, String email) {
-        visited.add(email);
-        // Add the email vector that contains the current component's emails
-        mergedAccount.add(email);
+    HashMap<Integer,List<Integer>> graph;
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        graph = new HashMap<>();
+        HashMap<String,Integer> emailToUser = new HashMap<>();        
+        Set<Integer> visited = new HashSet<>();
         
-        if (!adjacent.containsKey(email)) {
-            return;
-        }
-        
-        for (String neighbor : adjacent.get(email)) {
-            if (!visited.contains(neighbor)) {
-                DFS(mergedAccount, neighbor);
+        for(int i=0; i<accounts.size(); i++){
+            graph.put(i, new ArrayList<>());
+            List<String> emails = accounts.get(i);
+            for(int j=1; j<emails.size(); j++){
+                String email = emails.get(j);
+                if(!emailToUser.containsKey(email)){
+                    emailToUser.put(email, i);
+                }else{
+                    int otherUser = emailToUser.get(email);
+                    graph.get(i).add(otherUser);
+                    graph.get(otherUser).add(i);
+                }
             }
         }
+        
+        List<List<String>> ans = new ArrayList<>();
+        for(int i=0; i<accounts.size(); i++){
+            if(!visited.contains(i)){
+                List<String> records = new ArrayList<>();
+                records.add(accounts.get(i).get(0));
+                dfs(i, accounts, visited, new HashSet<String>(), records);
+                Collections.sort(records.subList(1, records.size()));
+                ans.add(records);
+            }
+        }
+        
+        return ans;
     }
     
-    public List<List<String>> accountsMerge(List<List<String>> accountList) {
-        int accountListSize = accountList.size();
-        
-        for (List<String> account : accountList) {
-            int accountSize = account.size();
-            
-            // Building adjacency list
-            // Adding edge between first email to all other emails in the account
-            String accountFirstEmail = account.get(1);
-            for (int j = 2; j < accountSize; j++) {
-                String accountEmail = account.get(j);
-                
-                if (!adjacent.containsKey(accountFirstEmail)) {
-                    adjacent.put(accountFirstEmail, new ArrayList<String>());
-                }
-                adjacent.get(accountFirstEmail).add(accountEmail);
-                
-                if (!adjacent.containsKey(accountEmail)) {
-                    adjacent.put(accountEmail, new ArrayList<String>());
-                }
-                adjacent.get(accountEmail).add(accountFirstEmail);
+    public void dfs(int index, List<List<String>> accounts, Set<Integer> visited, Set<String> group, List<String> records){        
+        visited.add(index);
+        for(int i=1; i<accounts.get(index).size(); i++){ 
+            if(!group.contains(accounts.get(index).get(i))){
+                group.add(accounts.get(index).get(i)); 
+                records.add(accounts.get(index).get(i));
             }
-        }
-        
-        // Traverse over all th accounts to store components
-        List<List<String>> mergedAccounts = new ArrayList<>();
-        for (List<String> account : accountList) {
-            String accountName = account.get(0);
-            String accountFirstEmail = account.get(1);
-            
-            // If email is visited, then it's a part of different component
-            // Hence perform DFS only if email is not visited yet
-            if (!visited.contains(accountFirstEmail)) {
-                List<String> mergedAccount = new ArrayList<>();
-                // Adding account name at the 0th index
-                mergedAccount.add(accountName);
                 
-                DFS(mergedAccount, accountFirstEmail);
-                Collections.sort(mergedAccount.subList(1, mergedAccount.size())); 
-                mergedAccounts.add(mergedAccount);
-            }
         }
-        
-        return mergedAccounts;
+        for(int neighbor : graph.get(index)){
+            if(!visited.contains(neighbor)){
+                dfs(neighbor, accounts, visited, group, records);                
+            }
+        }                
     }
 }
