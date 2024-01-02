@@ -23,29 +23,30 @@ class Solution {
         List<List<String>> ans = new ArrayList<>();
         for(int i=0; i<accounts.size(); i++){
             if(!visited.contains(i)){
-                List<String> records = new ArrayList<>();
-                records.add(accounts.get(i).get(0));
-                dfs(i, accounts, visited, new HashSet<String>(), records);
-                Collections.sort(records.subList(1, records.size()));
-                ans.add(records);
+                List<String> accountsEntry = new ArrayList<>();
+                accountsEntry.add(accounts.get(i).get(0));
+                dfs(i, accounts, visited, new HashSet<String>(), accountsEntry);
+                Collections.sort(accountsEntry.subList(1, accountsEntry.size()));
+                ans.add(accountsEntry);
             }
         }
         
         return ans;
     }
     
-    public void dfs(int index, List<List<String>> accounts, Set<Integer> visited, Set<String> group, List<String> records){        
+    public void dfs(int index, List<List<String>> accounts, Set<Integer> visited, Set<String> seenEmail, List<String> accountsEntry){        
         visited.add(index);
         for(int i=1; i<accounts.get(index).size(); i++){ 
-            if(!group.contains(accounts.get(index).get(i))){
-                group.add(accounts.get(index).get(i)); 
-                records.add(accounts.get(index).get(i));
+            String email = accounts.get(index).get(i);
+            if(!seenEmail.contains(email)){
+                seenEmail.add(email); 
+                accountsEntry.add(email);
             }
                 
         }
-        for(int neighbor : graph.get(index)){
-            if(!visited.contains(neighbor)){
-                dfs(neighbor, accounts, visited, group, records);                
+        for(int nextAccountEntry : graph.get(index)){
+            if(!visited.contains(nextAccountEntry)){
+                dfs(nextAccountEntry, accounts, visited, seenEmail, accountsEntry);                
             }
         }                
     }
