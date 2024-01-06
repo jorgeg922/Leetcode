@@ -9,7 +9,7 @@ class Solution {
             return false;
         }
         
-        Boolean[][] mem = new Boolean[nums.length][(total/2)];
+        Boolean[][] mem = new Boolean[nums.length][total/2];
        
         return dp(0,0,nums,mem);
     }
