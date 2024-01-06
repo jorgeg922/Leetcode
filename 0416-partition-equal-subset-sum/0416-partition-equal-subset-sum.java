@@ -9,7 +9,7 @@ class Solution {
             return false;
         }
         
-        Boolean[][] mem = new Boolean[nums.length][total/2];
+        Boolean[][] mem = new Boolean[nums.length][total/2+1];
        
         return dp(0,0,nums,mem);
     }
@@ -27,8 +27,8 @@ class Solution {
             return mem[index][runningSum];
         }
         
-        boolean result = dp(index+1, runningSum+nums[index], nums, mem) || 
-                        dp(index+1, runningSum, nums, mem);
+        boolean result = dp(index+1, runningSum, nums, mem) || dp(index+1, runningSum+nums[index], nums, mem);
+                        
         
         mem[index][runningSum] = result;
         return result;
