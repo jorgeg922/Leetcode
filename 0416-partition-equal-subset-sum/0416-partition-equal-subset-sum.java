@@ -19,7 +19,7 @@ class Solution {
             return true;
         }
         
-        if(index == nums.length || runningSum > total/2){
+        if(index == nums.length-1 || runningSum > total/2){
             return false;
         }
                
