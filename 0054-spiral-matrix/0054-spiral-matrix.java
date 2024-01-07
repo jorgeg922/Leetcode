@@ -1,16 +1,20 @@
 class Solution {
     int rows;
     int cols;
+    int count; 
     int[][] matrix;
     boolean[][] visited;
-    int count; 
+    
     public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> ans = new ArrayList<>();
         this.matrix = matrix;
+        List<Integer> ans = new ArrayList<>();
+        
         rows = matrix.length;
         cols = matrix[0].length;
+        count = rows * cols;
+        
         visited = new boolean[rows][cols];
-        count = (rows * cols)-1;
+        
         int row = 0;
         int col = 0;
         boolean right = true;
@@ -18,27 +22,28 @@ class Solution {
         
         ans.add(matrix[0][0]);
         visited[0][0]=true;
+        count--;
+        
         while(count > 0){
             if(right){
-                col = goRight(row,col+1,ans) - 1;
+                col = goRight(row,col+1,ans)-1;
                 right = false;
             }
-            //System.out.println(count);
+
             if(down){                
-                row = goDown(row+1,col,ans) - 1 ;
+                row = goDown(row+1,col,ans)-1 ;
                 down = false;
             }
-            //System.out.println(count);
+
             if(!right){                
-                col = goLeft(row,col-1,ans) + 1;
+                col = goLeft(row,col-1,ans)+1;
                 right = true;
             }
-            //System.out.println(count);
+
             if(!down){
                 row = goUp(row-1,col,ans)+1;
                 down=true;
-            }
-            //System.out.println(count);
+            }        
         }
         
         return ans;
