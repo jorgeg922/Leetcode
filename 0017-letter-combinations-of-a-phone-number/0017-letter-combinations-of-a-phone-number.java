@@ -31,14 +31,5 @@ class Solution {
                 findCombinations(digits,index+1,sb);
                 sb.deleteCharAt(sb.length()-1);
         }
-        /*for(int i=index+1; i<digits.length(); i++){
-            List<Character> cl = mapping.get(digits.charAt(i));
-            
-            for(char letter : cl){
-                sb.append(letter);
-                findCombinations(digits,i,sb);
-                sb.deleteCharAt(sb.length()-1);
-            }
-        }*/
     }
 }
