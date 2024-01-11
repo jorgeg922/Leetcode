@@ -15,7 +15,7 @@ class Solution {
         mapping.put('7', Arrays.asList('p','q','r','s'));
         mapping.put('8', Arrays.asList('t','u','v'));
         mapping.put('9', Arrays.asList('w','x','y','z'));
-        findCombinations(digits, -1, new StringBuilder());
+        findCombinations(digits, 0, new StringBuilder());
         return combinations;
     }
     
@@ -25,14 +25,20 @@ class Solution {
             return;
         }
         
-        
-        for(int i=index+1; i<digits.length(); i++){
+        List<Character> l = mapping.get(digits.charAt(index));
+        for(char letter : l){
+                sb.append(letter);
+                findCombinations(digits,index+1,sb);
+                sb.deleteCharAt(sb.length()-1);
+        }
+        /*for(int i=index+1; i<digits.length(); i++){
             List<Character> cl = mapping.get(digits.charAt(i));
+            
             for(char letter : cl){
                 sb.append(letter);
                 findCombinations(digits,i,sb);
                 sb.deleteCharAt(sb.length()-1);
             }
-        }
+        }*/
     }
 }
