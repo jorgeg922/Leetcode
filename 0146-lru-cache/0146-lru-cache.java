@@ -28,10 +28,6 @@ class LRUCache {
     public int get(int key) {
         if(map.containsKey(key)){
             Node curr = map.get(key);           
-            Node next = curr.next;
-            Node prev = curr.prev;
-            prev.next = next;
-            next.prev = prev;
             moveToFront(curr);
             return curr.value;
         }
@@ -44,15 +40,11 @@ class LRUCache {
         if(map.containsKey(key)){
             curr = map.get(key);
             curr.value = value;
-            Node next = curr.next;
-            Node prev = curr.prev;
-            prev.next = next;
-            next.prev = prev;
             moveToFront(curr);
         }else{
             curr = new Node(key, value);
             map.put(key, curr);
-            moveToFront(curr);
+            addToList(curr);
             currSize++;
         }
         
@@ -66,11 +58,17 @@ class LRUCache {
     }
     
     private void moveToFront(Node node){
-        Node tmp = head.next;
-        head.next = node;
-        node.prev = head;
-        node.next = tmp;
-        tmp.prev = node;
+        if(head.next == node){
+            return;
+        }
+        
+        Node prev = node.prev;
+        Node next = node.next;
+        prev.next = next;
+        next.prev = prev;
+        
+        addToList(node);
+        
     }
     
     private void removeLast(){
@@ -78,6 +76,14 @@ class LRUCache {
         last.prev.next = tail;
         tail.prev = last.prev;
         map.remove(last.key);
+    }
+    
+    private void addToList(Node node){
+        Node oldfront = head.next;
+        head.next = node;
+        node.prev = head;
+        node.next = oldfront;
+        oldfront.prev = node;
     }
 }
 
