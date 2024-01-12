@@ -33,7 +33,7 @@ class Solution {
     }
     
     public int evaluateExpr(Stack<Object> stack){
-        if(!(stack.peek() instanceof Integer)){
+        if(stack.isEmpty() || !(stack.peek() instanceof Integer)){
             stack.push(0);
         }
         
