@@ -49,9 +49,7 @@ class Solution {
             }     
         }
         
-        if(size == 0){
-            ans.add(left);
-        }
+       
         
         return ans;
     }
