@@ -1,52 +1,55 @@
 class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
-
-        // edge cases
-        if (n < 2) {
-            ArrayList<Integer> centroids = new ArrayList<>();
-            for (int i = 0; i < n; i++)
-                centroids.add(i);
-            return centroids;
+        if(edges.length == 0){           
+            return Arrays.asList(0);
         }
-
-        // Build the graph with the adjacency list
-        ArrayList<Set<Integer>> neighbors = new ArrayList<>();
-        for (int i = 0; i < n; i++)
-            neighbors.add(new HashSet<Integer>());
-
-        for (int[] edge : edges) {
-            Integer start = edge[0], end = edge[1];
-            neighbors.get(start).add(end);
-            neighbors.get(end).add(start);
+        if(n < 2){
+             return Arrays.asList(0,1);
         }
-
-        // Initialize the first layer of leaves
-        ArrayList<Integer> leaves = new ArrayList<>();
-        for (int i = 0; i < n; i++)
-            if (neighbors.get(i).size() == 1)
-                leaves.add(i);
-
-        // Trim the leaves until reaching the centroids
-        int remainingNodes = n;
-        while (remainingNodes > 2) {
-            remainingNodes -= leaves.size();
-            ArrayList<Integer> newLeaves = new ArrayList<>();
-
-            // remove the current leaves along with the edges
-            for (Integer leaf : leaves) {
-                // the only neighbor left for the leaf node
-                Integer neighbor = neighbors.get(leaf).iterator().next();
-                // remove the edge along with the leaf node
-                neighbors.get(neighbor).remove(leaf);
-                if (neighbors.get(neighbor).size() == 1)
-                    newLeaves.add(neighbor);
+        HashMap<Integer,Set<Integer>> graph = new HashMap<>();
+        
+        for(int[] edge : edges){
+            int a = edge[0];
+            int b = edge[1];
+            
+            if(!graph.containsKey(a)){
+                graph.put(a, new HashSet<>());
             }
-
-            // prepare for the next round
-            leaves = newLeaves;
+            
+            if(!graph.containsKey(b)){
+                graph.put(b, new HashSet<>());
+            }
+            
+            graph.get(a).add(b);
+            graph.get(b).add(a);
         }
-
-        // The remaining nodes are the centroids of the graph
-        return leaves;
+        
+        Queue<Integer> leafs = new LinkedList<>();
+        for(Map.Entry<Integer,Set<Integer>> entry : graph.entrySet()){
+            if(entry.getValue().size() == 1){
+                leafs.add(entry.getKey());
+            }
+        }
+        
+        int remainingNodes = n;
+        while(remainingNodes > 2){
+            int size = leafs.size();
+            remainingNodes -= size;
+            for(int i=0; i<size; i++){
+                int currentLeaf = leafs.poll();
+                int neighbor = graph.get(currentLeaf).iterator().next();
+                graph.get(neighbor).remove(currentLeaf);
+                if(graph.get(neighbor).size() == 1){
+                    leafs.add(neighbor);
+                }
+            }
+        }
+        
+        List<Integer> ans = new ArrayList<>();
+        while(!leafs.isEmpty()){
+            ans.add(leafs.poll());
+        }
+        
+        return ans;
     }
 }
