@@ -6,6 +6,7 @@ class Solution {
         if(n < 2){
              return Arrays.asList(0,1);
         }
+        
         HashMap<Integer,Set<Integer>> graph = new HashMap<>();
         
         for(int[] edge : edges){
@@ -45,10 +46,7 @@ class Solution {
             }
         }
         
-        List<Integer> ans = new ArrayList<>();
-        while(!leafs.isEmpty()){
-            ans.add(leafs.poll());
-        }
+        List<Integer> ans = new ArrayList<>(leafs);
         
         return ans;
     }
