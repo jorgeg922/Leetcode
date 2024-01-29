@@ -3,6 +3,7 @@ class Solution {
         if(n == 1 && edges.length==0){
             return true;
         }
+        
         HashMap<Integer,List<Integer>> graph = new HashMap<>();
         for(int[] edge : edges){
             int x = edge[0];
@@ -38,7 +39,6 @@ class Solution {
             for(int i=0; i<size; i++){
                 int curr = q.poll();
                 inQueue.remove(curr);
-                int repLink = 0;
                 seen.add(curr);
                 for(int link : graph.get(curr)){
                     if(!seen.contains(link)){
