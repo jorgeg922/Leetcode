@@ -25,12 +25,14 @@ class Solution {
         Set<Integer> inQueue = new HashSet<>();
         Set<Integer> seen = new HashSet<>();
         
-        for(int i=0; i<n; i++){
-            if(!graph.containsKey(i)){
-                return false;
-            }
+        //for(int i=0; i<n; i++){
+        //    if(!graph.containsKey(i)){
+        //        return false;
+        //    }
+        //}
+        if(!graph.containsKey(0)){
+            return false;
         }
-        
         q.add(0);
         inQueue.add(0);
         
