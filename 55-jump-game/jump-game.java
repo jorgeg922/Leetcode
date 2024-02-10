@@ -21,7 +21,7 @@ class Solution {
         
         int jump = nums[index];
         while(jump >= 1){
-            if(index+jump <= nums.length -1 && dp(index+jump, nums)){
+            if(dp(index+jump, nums)){
                 memo.put(index,true);
                 return true;
             }
