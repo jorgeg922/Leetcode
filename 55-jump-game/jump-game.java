@@ -6,6 +6,7 @@ class Solution {
     
     public boolean dp(int index, int[] nums){
         if(index == nums.length-1){
+            memo.put(index, true);
             return true;
         }
         
@@ -13,7 +14,12 @@ class Solution {
             return memo.get(index);
         }
         
-        int jump = nums[Math.min(index,nums.length-1)];
+        if(nums[index] == 0){
+            memo.put(index, false);
+            return false;
+        }
+        
+        int jump = nums[index];
         while(jump >= 1){
             if(index+jump <= nums.length -1 && dp(index+jump, nums)){
                 return true;
