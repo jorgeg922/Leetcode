@@ -5,7 +5,7 @@ class Solution {
     }
     
     public boolean dp(int index, int[] nums){
-        if(index == nums.length-1){
+        if(index >= nums.length-1){
             memo.put(index, true);
             return true;
         }
