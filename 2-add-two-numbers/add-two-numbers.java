@@ -10,40 +10,38 @@
  */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        
-        ListNode l1_ptr = l1;
-        ListNode l2_ptr = l2;
+        ListNode l1p = l1;
+        ListNode l2p = l2;
         ListNode ans = new ListNode(0);
-        ListNode ans_ptr = ans;
-        
+        ListNode ansp = ans;
         int carry = 0;
-        while(l1_ptr != null || l2_ptr != null){
-            int val1 = 0;
-            int val2 = 0;
-            if(l1_ptr != null){
-                val1 = l1_ptr.val;
-                l1_ptr = l1_ptr.next;
+        
+        while(l1p != null || l2p !=null){
+            int n1 = 0;
+            int n2 = 0;
+            if(l1p != null){
+                n1 = l1p.val;
+                l1p = l1p.next;
             }
-            if(l2_ptr != null){
-                val2 = l2_ptr.val;
-                l2_ptr = l2_ptr.next;
+            if(l2p != null){
+                n2 = l2p.val;
+                l2p = l2p.next;
             }
             
-            int addition = val1 + val2 + carry;
+            int sum = n1 + n2 + carry;
             carry = 0;
-            if(addition >= 10){
-                carry = addition/10;
-                addition = addition%10;
+            if(sum > 9){
+                carry = sum/10;
+                sum = sum%10;
             }
             
-            ans.next = new ListNode(addition);
-            ans = ans.next;           
+            ansp.next = new ListNode(sum);
+            ansp = ansp.next;
         }
         
-        if(carry > 0){
-            ans.next = new ListNode(carry);
+        if(carry != 0){
+            ansp.next = new ListNode(carry);
         }
-        
-        return ans_ptr.next;
+        return ans.next;
     }
 }
