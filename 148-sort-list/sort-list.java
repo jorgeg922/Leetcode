@@ -10,7 +10,7 @@
  */
 class Solution {
     public ListNode sortList(ListNode head) {
-       PriorityQueue<Integer> pq = new PriorityQueue<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
         ListNode ptr = head;
         
         while(ptr != null){
