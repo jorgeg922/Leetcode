@@ -23,12 +23,12 @@ class Solution {
            
         }
         
-        List<Integer> ans = new ArrayList<>();
-        
+        int[] ans = new int[stack.size()];
+        int i= ans.length-1;
         while(!stack.isEmpty()){
-           ans.add(stack.pop());    
+           ans[i--] = stack.pop();    
         }
-        Collections.reverse(ans);
-        return ans.stream().mapToInt(i->i).toArray();
+       
+        return ans;
     }
 }
