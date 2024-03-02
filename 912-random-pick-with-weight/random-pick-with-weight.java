@@ -20,9 +20,9 @@ class Solution {
             int mid = left + (right-left)/2;
             
             if(prefixSum[mid] <= target){
-                left++;
+                left = mid + 1;
             }else{
-                right--;
+                right = mid;
             }
         }
         
