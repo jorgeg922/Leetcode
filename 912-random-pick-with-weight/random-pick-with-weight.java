@@ -12,13 +12,21 @@ class Solution {
     
     public int pickIndex() {
         double target = pf * Math.random();
-        for(int i=0; i<prefixSum.length; i++){
-            if(prefixSum[i] > target){
-                return i;
+        
+        int left = 0;
+        int right = prefixSum.length-1;
+        
+        while(left < right){
+            int mid = left + (right-left)/2;
+            
+            if(prefixSum[mid] <= target){
+                left++;
+            }else{
+                right--;
             }
         }
         
-        return -1;
+        return left;
     }
 }
 
