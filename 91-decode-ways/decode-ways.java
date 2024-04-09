@@ -7,17 +7,15 @@ class Solution {
     public int numDecodings(String s) {
         if (s == null || s.length() == 0)
             return 0;
-        
-        // Initialize memoization map
         memo = new HashMap<>();
         
         return backtrack(0, s);
     }
     
     public int backtrack(int index, String s) {
-        // If the result for this index has been computed before, return it from memo
-        if (memo.containsKey(index))
-            return memo.get(index);
+        if (memo.containsKey(index)){
+          return memo.get(index);  
+        }
         
         // Base case: If index reaches end of string, return 1
         if (index == s.length())
@@ -33,8 +31,10 @@ class Solution {
         ways += backtrack(index + 1, s);
         
         // Decode two digits if valid
-        if (index + 1 < s.length() && Integer.parseInt(s.substring(index, index + 2)) <= 26)
+        if (index + 1 < s.length() && (s.substring(index, index + 2).compareTo("26") <= 0)){
             ways += backtrack(index + 2, s);
+        }
+            
         
         // Store the result for this index in memoization map
         memo.put(index, ways);
