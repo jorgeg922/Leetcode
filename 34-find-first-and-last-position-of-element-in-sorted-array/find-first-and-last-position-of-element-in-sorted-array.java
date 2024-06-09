@@ -50,8 +50,8 @@ class Solution {
             
         }
         
-        if(nums[left] != target){
-            return left -1;
+        if(nums[right] != target){
+            return right -1;
         }
         return right;
     }
