@@ -10,11 +10,7 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<>(){
-            public int compare(ListNode node1, ListNode node2){
-                return node1.val - node2.val;
-            }
-        });
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a,b)->a.val-b.val);
         
         for(ListNode list : lists){
             ListNode head = list;
