@@ -1,17 +1,17 @@
 class Logger {
-    HashMap<String, Integer> count;
+    Map<String, Integer> messages;
     public Logger() {
-        count = new HashMap<String,Integer>();
+        messages = new HashMap<>();
     }
     
     public boolean shouldPrintMessage(int timestamp, String message) {
-        if(!count.containsKey(message)){
-            count.put(message,timestamp);
+        if(!messages.containsKey(message)){
+            messages.put(message, timestamp);
             return true;
         }
         
-        if(timestamp  >= count.get(message) + 10){
-            count.put(message,timestamp);
+        if(timestamp >= messages.get(message) + 10){
+            messages.put(message, timestamp);
             return true;
         }
         
