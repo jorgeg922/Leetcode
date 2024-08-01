@@ -1,7 +1,7 @@
 class Solution {
     public int arrangeCoins(int n) {
         int remainingCoins = n;
-        int step = 1;
+        int step = 0;
         while(remainingCoins >= step){
             remainingCoins -= step;
             step++;
