@@ -1,22 +1,22 @@
 class Solution {
     public int minOperations(String[] logs) {
-        int depth = 0;
+        Stack<String> stack = new Stack<>();
         
         for(String operation : logs){
-            if(depth == 0 && operation.equals("../")){
-                continue;
-            }
-            
-            if(operation.equals("../")){
-                depth--;
-                continue;
-            }
-            
-            if(!operation.equals("./")){
-                depth++;
+            switch(operation){
+                case "../":
+                    if(!stack.isEmpty()){
+                        stack.pop();
+                    }
+                    break;
+                case "./":
+                    break;
+                default:
+                    stack.push(operation);
+                    break;
             }
         }
         
-        return depth;
+        return stack.size();
     }
 }
