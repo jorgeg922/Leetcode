@@ -3,24 +3,25 @@ class Solution {
         if(numRows == 1){
             return s;
         }
+        
         List<StringBuilder> list = new ArrayList<>();
-        int currRow = 0;
         
         for(int i=0; i<numRows; i++){
             list.add(new StringBuilder());
         }
         
+        int currentRow = 0;
         boolean goDown = false;
         
-        for(char c : s.toCharArray()){  
+        for(char c : s.toCharArray()){
+            list.get(currentRow).append(c);
             
-            list.get(currRow).append(c);
-            if(currRow == 0 || currRow == numRows-1){
+            if(currentRow == 0 || currentRow == numRows-1){
                 goDown = !goDown;
             }
             
-            if(goDown) currRow++;
-            else currRow--;
+            if(goDown) currentRow++;
+            else currentRow--;
         }
         
         String ans = "";
