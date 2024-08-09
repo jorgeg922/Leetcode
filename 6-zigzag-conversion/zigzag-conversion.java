@@ -10,18 +10,18 @@ class Solution {
             list.add(new StringBuilder());
         }
         
-        int currentRow = 0;
+        int cr = 0;
         boolean goDown = false;
         
         for(char c : s.toCharArray()){
-            list.get(currentRow).append(c);
+            list.get(cr).append(c);
             
-            if(currentRow == 0 || currentRow == numRows-1){
+            if(cr == 0 || cr == numRows-1){
                 goDown = !goDown;
             }
             
-            if(goDown) currentRow++;
-            else currentRow--;
+            if(goDown) cr++;
+            else cr--;
         }
         
         String ans = "";
