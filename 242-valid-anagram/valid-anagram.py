@@ -1,5 +1,8 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        
         s_dic = {}
         for c in s:
             if c not in s_dic:
