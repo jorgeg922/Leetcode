@@ -1,16 +1,8 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        hashmap = {}
-        for str in strs:
-            currChars = list(str)
-            currChars.sort()
-            reconstructedStr = ''.join(currChars)
-            if reconstructedStr not in hashmap:
-                hashmap[reconstructedStr] = []
-            hashmap[reconstructedStr].append(str)
+        ans = collections.defaultdict(list)
+        for s in strs:
+            ans[tuple(sorted(s))].append(s)
         
-        ans = []
-        for key, value in hashmap.items():
-            ans.append(value)
         
-        return ans
+        return ans.values()
