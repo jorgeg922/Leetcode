@@ -4,7 +4,7 @@ class Solution:
         for index, num in enumerate(nums):
             diff = target - num
             if diff in seen:
-                return {seen[diff], index}
+                return [seen[diff], index]
             seen[num] = index
             
         return None
