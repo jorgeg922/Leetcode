@@ -38,10 +38,7 @@ class Solution {
             }
         }
         
-        if(ans.size() == numCourses){
-            return ans.stream().mapToInt(i->i).toArray();
-        }
-        
-        return new int[]{};
+
+        return ans.size()==numCourses?ans.stream().mapToInt(i->i).toArray():new int[]{};
     }
 }
