@@ -51,6 +51,6 @@ class Solution {
              
         }
         
-        return freshOranges<=0?minutes-1:-1;
+        return freshOranges==0?minutes-1:-1;
     }
 }
