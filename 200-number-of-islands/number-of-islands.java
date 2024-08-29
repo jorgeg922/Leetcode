@@ -1,4 +1,5 @@
 class Solution {
+    int[][] locations = {{1,0},{-1,0},{0,1},{0,-1}};
     char[][] grid;
     int rows;
     int cols;
@@ -28,9 +29,10 @@ class Solution {
         }
         
         visited[row][col] = true;
-        dfs(row+1,col,visited);
-        dfs(row, col+1, visited);
-        dfs(row-1, col, visited);
-        dfs(row, col-1, visited);
+        for(int[] location : locations){
+            int nextRow = row + location[0];
+            int nextCol = col + location[1];
+            dfs(nextRow, nextCol, visited);
+        }
     }
 }
