@@ -1,57 +1,47 @@
 class Solution {
-   class Node{
-       int prereqs=0;
-       List<Integer> links = new LinkedList<>();
-   }
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        HashMap<Integer, Node> graph = new HashMap<>();
+        Map<Integer, List<Integer>> prereqs = new HashMap<>();
+        Map<Integer, Integer> numOfPrereqs = new HashMap<>();
+        
         for(int i=0; i<numCourses; i++){
-            graph.put(i, new Node());
+            prereqs.put(i, new ArrayList<>());
+            numOfPrereqs.put(i,0);
         }
         
-        for(int[] courses : prerequisites){
-            int prev = courses[1];
-            int curr = courses[0];
+        for(int[] prerequisite : prerequisites){
+            int requirement = prerequisite[1];
+            int course = prerequisite[0];
             
-            if(!graph.containsKey(prev)){
-                graph.put(prev, new Node());
-            }
-            if(!graph.containsKey(curr)){
-                graph.put(curr, new Node());
-            }
-            
-            graph.get(curr).prereqs += 1;
-            graph.get(prev).links.add(curr);
+            prereqs.get(requirement).add(course);
+            numOfPrereqs.put(course, numOfPrereqs.getOrDefault(course,0)+1);
         }
-        
         
         Queue<Integer> q = new LinkedList<>();
-        List<Integer> order = new ArrayList<>();
-        
-        for(Map.Entry<Integer,Node> entry : graph.entrySet()){
-            if(entry.getValue().prereqs == 0){
+        for(Map.Entry<Integer,Integer> entry : numOfPrereqs.entrySet()){
+            if(entry.getValue() == 0){
                 q.add(entry.getKey());
             }
         }
         
-        
+        List<Integer> ans = new ArrayList<>();
         while(!q.isEmpty()){
             int currCourse = q.poll();
-            order.add(currCourse);
-            for(int nextCourse : graph.get(currCourse).links){
-                Node next = graph.get(nextCourse);
-                next.prereqs-=1;
-                if(next.prereqs == 0){
-                    q.add(nextCourse);
+            ans.add(currCourse);
+            List<Integer> canTakeAfter = prereqs.get(currCourse);
+            for(int canTake : canTakeAfter){
+                if(numOfPrereqs.get(canTake) > 0){
+                    numOfPrereqs.put(canTake, numOfPrereqs.get(canTake)-1);
+                }
+                if(numOfPrereqs.get(canTake) <= 0){
+                    q.add(canTake);
                 }
             }
         }
         
-        if(order.size() != numCourses){
-            return new int[]{};
+        if(ans.size() == numCourses){
+            return ans.stream().mapToInt(i->i).toArray();
         }
         
-        return order.stream().mapToInt(i->i).toArray();
+        return new int[]{};
     }
-    
 }
