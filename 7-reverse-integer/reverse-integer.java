@@ -1,27 +1,18 @@
 class Solution {
     public int reverse(int x) {
+        int num = x;
+        long reversed = 0;
         
-        String curr = String.valueOf(x);
-        StringBuilder reversed = new StringBuilder();
-        
-        if(curr.charAt(0) == '-'){
-            reversed.append('-');
-            curr = curr.substring(1);
+        while(num != 0){
+            int rightDigit = num%10;
+            num/=10;
+            reversed = reversed*10 + rightDigit;   
         }
         
-        for(int i=curr.length()-1; i>=0; i--){
-            reversed.append(curr.charAt(i));
-        }
-        
-        String reversedNum = reversed.toString();
-       
-        try{
-            int ans = Integer.parseInt(reversedNum);
-            return ans;
-        }catch(Exception e){
+        if(reversed > Integer.MAX_VALUE || reversed < Integer.MIN_VALUE){
             return 0;
         }
         
-        
+        return (int) reversed;
     }
 }
