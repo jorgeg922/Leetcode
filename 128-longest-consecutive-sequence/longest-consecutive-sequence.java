@@ -10,8 +10,8 @@ class Solution {
         }
         
         int max_size = 1;
-        for(int i=0; i<nums.length; i++){
-            int current = nums[i];
+        for(int entry : set){
+            int current = entry;
             int size = 1;
             if(!set.contains(current-1)){
                 int prev = current;
