@@ -18,9 +18,7 @@ class Solution {
         
         public String searchForLongestPrefix(){
             StringBuilder sb = new StringBuilder();
-            if(links.size() > 1){
-                return sb.toString();
-            }
+           
             Trie curr = this;
             
             while(!curr.isEndOfWord){
