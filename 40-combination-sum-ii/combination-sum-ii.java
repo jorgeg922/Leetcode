@@ -1,52 +1,37 @@
 class Solution {
     Set<List<Integer>> uniques;
     int target;
-
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
         uniques = new HashSet<>();
         this.target = target;
-
-        // Create a frequency map
-        Map<Integer, Integer> freqMap = new HashMap<>();
-        for (int num : candidates) {
-            freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
+        findCombinations(candidates,0,0, new ArrayList<Integer>());
+        
+        List<List<Integer>> ans = new ArrayList<>();
+        for(List<Integer> set : uniques){
+            ans.add(set);
         }
-
-        // Extract keys as a unique list of elements
-        List<Integer> uniqueCandidates = new ArrayList<>(freqMap.keySet());
-        findCombinations(uniqueCandidates, 0, 0, new ArrayList<>(), freqMap);
-
-        return new ArrayList<>(uniques);
+        return ans;
     }
-
-    public void findCombinations(List<Integer> candidates, int index, int sum, List<Integer> numList, Map<Integer, Integer> freqMap) {
-        if (sum == target) {
+    
+    public void findCombinations(int[]candidates, int index, int sum, List<Integer> numList){
+        if(sum == target){
             uniques.add(new ArrayList<>(numList));
             return;
         }
-
-        for (int i = index; i < candidates.size(); i++) {
-            int num = candidates.get(i);
-            int remaining = target - sum;
-
-            if (num > remaining) {
-                continue; // skip if adding this number exceeds the target
+        
+        for(int i=index; i<candidates.length; i++){
+            if(i>index && candidates[i]==candidates[i-1]){
+                continue;
             }
-
-            if (freqMap.get(num) == 0) {
-                continue; // skip if this number is exhausted
+            if(sum+candidates[i] > target){
+                continue;
             }
-
-            // Choose the current number
-            numList.add(num);
-            freqMap.put(num, freqMap.get(num) - 1);
-
-            // Recur for the next elements
-            findCombinations(candidates, i, sum + num, numList, freqMap);
-
-            // Backtrack: remove the last chosen number and restore the count
-            numList.remove(numList.size() - 1);
-            freqMap.put(num, freqMap.get(num) + 1);
+           
+           
+            numList.add(candidates[i]);
+            findCombinations(candidates, i+1, sum+candidates[i],numList);
+            numList.remove(numList.size()-1);
         }
     }
 }
