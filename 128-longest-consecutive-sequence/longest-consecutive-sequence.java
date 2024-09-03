@@ -12,16 +12,18 @@ class Solution {
         int max_size = 1;
         for(int entry : set){
             int current = entry;
-            int size = 1;
+            
             if(!set.contains(current-1)){
+                int size = 1;
                 int prev = current;
                 while(set.contains(prev+1)){
                     size++;
                     prev++;
                 }
+                max_size = Math.max(max_size, size);
             }
             
-            max_size = Math.max(max_size, size);
+            
         }
         
         return max_size;
