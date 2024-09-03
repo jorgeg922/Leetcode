@@ -17,8 +17,7 @@ class Solution {
         }
         
         public String searchForLongestPrefix(){
-            StringBuilder sb = new StringBuilder();
-           
+            StringBuilder sb = new StringBuilder();           
             Trie curr = this;
             
             while(!curr.isEndOfWord){
@@ -27,9 +26,7 @@ class Solution {
                 }
                 for(Map.Entry<Character,Trie> link : curr.links.entrySet()){
                     sb.append(link.getKey());
-                    if(curr.isEndOfWord){
-                        return sb.toString();
-                    }
+                    
                     curr = link.getValue();
                 }
             }
