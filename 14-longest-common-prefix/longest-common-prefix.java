@@ -26,7 +26,6 @@ class Solution {
                 }
                 for(Map.Entry<Character,Trie> link : curr.links.entrySet()){
                     sb.append(link.getKey());
-                    
                     curr = link.getValue();
                 }
             }
