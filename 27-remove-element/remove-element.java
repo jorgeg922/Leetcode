@@ -4,10 +4,6 @@ class Solution {
         int right=nums.length-1;
         
         while(left <= right){
-            //while(nums[right] == val && right > left){
-            //    right--;
-            //}
-            
             if(nums[left] == val){
                 swap(nums, left, right);
                 right--;
