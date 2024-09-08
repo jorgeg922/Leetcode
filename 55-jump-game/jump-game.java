@@ -1,34 +1,37 @@
+enum Visited{
+    GOOD, BAD, UNK
+}
 class Solution {
-    HashMap<Integer,Boolean> memo = new HashMap<>();
+    int[] nums;
+    int len;
+    Visited[] memo;
     public boolean canJump(int[] nums) {
-        return dp(0, nums);
+        this.nums = nums;
+        this.len = nums.length;
+        this.memo = new Visited[len];
+        Arrays.fill(memo, Visited.UNK);
+        return jump(0);
     }
     
-    public boolean dp(int index, int[] nums){
-        if(index >= nums.length-1){
-            memo.put(index, true);
+    public boolean jump(int index){
+        if(index >= len-1){
             return true;
         }
         
-        if(memo.containsKey(index)){
-            return memo.get(index);
+        if(memo[index] != Visited.UNK){
+            return memo[index]==Visited.GOOD?true:false;
         }
         
-        if(nums[index] == 0){
-            memo.put(index, false);
-            return false;
-        }
+        int maxJump = nums[index];
         
-        int jump = nums[index];
-        while(jump >= 1){
-            if(dp(index+jump, nums)){
-                memo.put(index,true);
+        for(int i=1; i<= maxJump; i++){
+            if(jump(index+i)){
+                memo[index+i]=Visited.GOOD;
                 return true;
             }
-            jump--;
         }
         
-        memo.put(index, false);
+        memo[index] = Visited.BAD;
         return false;
     }
 }
