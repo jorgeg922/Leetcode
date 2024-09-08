@@ -15,6 +15,7 @@ class Solution {
     
     public boolean jump(int index){
         if(index >= len-1){
+            memo[index]=Visited.GOOD;
             return true;
         }
         
