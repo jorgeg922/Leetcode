@@ -25,12 +25,10 @@ class Solution {
         }
         
         int len = 0;
-        int count = 0;
         for(Map.Entry<String,Integer> entry : freq.entrySet()){
             if(entry.getValue() >= 3){
                 if(entry.getKey().length() > len){
                     len = entry.getKey().length();
-                    count = entry.getValue();
                 }
             }
         }
