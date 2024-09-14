@@ -4,24 +4,11 @@ class Solution {
         
         
         for(int left=0; left<s.length(); left++){
-            String sub = s.substring(left, left+1);
-            freq.put(sub, freq.getOrDefault(sub,0)+1);
-            
-            int right = left+1;
-            StringBuilder sb = new StringBuilder();
-            sb.append(sub);
-            while(right < s.length()){
-                if(sb.charAt(sb.length()-1) == s.charAt(right)){
-                    sb.append(s.charAt(right));
-                    freq.put(sb.toString(), freq.getOrDefault(sb.toString(),0)+1);
-                    
-                }else{
-                    break;
-                }
+            int right = left;
+            while(right < s.length() && s.charAt(left) == s.charAt(right)){
+                freq.put(s.substring(left,right+1), freq.getOrDefault(s.substring(left,right+1),0)+1);
                 right++;
             }
-            
-
         }
         
         int len = 0;
