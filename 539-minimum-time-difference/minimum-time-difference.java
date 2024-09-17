@@ -19,10 +19,10 @@ class Solution {
     }
     
     public int getDifference(int a, int b){
-        int totalMins = 1440 + 60;
+        int totalMins = 1440;
         
         int wayone = Math.abs(b-a);
-        int waytwo = Math.abs(a+totalMins-b)-60;
+        int waytwo = Math.abs(a+totalMins-b);
             
         return Math.min(wayone, waytwo);
     }
