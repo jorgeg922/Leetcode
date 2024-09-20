@@ -50,7 +50,7 @@ class SnakeGame {
             return -1;
         }
         
-        if(snakeMap.contains(newHead) && (snake.getLast().getKey() != nextRow || snake.getLast().getValue() != nextCol)){
+        if(snakeMap.contains(newHead) && !(snake.getLast().getKey() == nextRow && snake.getLast().getValue() == nextCol)){
             return -1;
         }
         
