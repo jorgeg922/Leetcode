@@ -1,33 +1,38 @@
 class Solution {
     public int[][] merge(int[][] intervals) {
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[0]-b[0]);
+        Deque<int[]> q = new LinkedList<>();
+        
+        Arrays.sort(intervals, new Comparator<>(){
+            public int compare(int[] a, int[] b){
+                return a[0] - b[0];
+            }
+        });
         
         for(int[] interval : intervals){
-            pq.add(interval);
-        }
-        
-        Deque<int[]> dq = new LinkedList<>();
-        
-        while(!pq.isEmpty()){
-            if(dq.isEmpty()){
-                dq.addLast(pq.poll());
+            if(q.isEmpty()){
+                q.addFirst(interval);
                 continue;
-            }    
-            
-            int[] curr = pq.poll();
-            if(dq.peekLast()[1] < curr[0]){
-                dq.addLast(curr);
-            }else if(dq.peekLast()[1] < curr[1]){
-                dq.peekLast()[1] = curr[1];
             }
+            
+            int lastEntryStart = q.peekLast()[0];
+            int lastEntryEnd = q.peekLast()[1];
+            
+            if(interval[0] > lastEntryEnd){
+                q.addLast(interval);
+            }else if(interval[1] > lastEntryEnd){
+                q.getLast()[1] = interval[1];
+            }
+            
         }
         
-        int[][] ans = new int[dq.size()][2];
-        int ptr = 0;
+        int[][] ans = new int[q.size()][2];
+        int i = 0;
         
-        while(!dq.isEmpty()){
-            ans[ptr++] = dq.pollFirst();
+        while(!q.isEmpty()){
+            ans[i] = q.pollFirst();
+            i++;
         }
+        
         return ans;
     }
 }
