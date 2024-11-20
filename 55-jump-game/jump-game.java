@@ -1,38 +1,37 @@
-enum Visited{
-    GOOD, BAD, UNK
-}
 class Solution {
-    int[] nums;
-    int len;
-    Visited[] memo;
-    public boolean canJump(int[] nums) {
-        this.nums = nums;
-        this.len = nums.length;
-        this.memo = new Visited[len];
-        Arrays.fill(memo, Visited.UNK);
-        return jump(0);
+    enum Visited{
+        UNK,
+        POSTIVE,
+        NEGATIVE
     }
     
-    public boolean jump(int index){
-        if(index >= len-1){
-            memo[index]=Visited.GOOD;
-            return true;
+    public boolean canJump(int[] nums) {
+        Visited[] memo = new Visited[nums.length];
+        Arrays.fill(memo, Visited.UNK);
+        
+        return jump(nums, 0, memo);
+    }
+    
+    public boolean jump(int[] nums, int index, Visited[] memo){
+        if(memo[index] != Visited.UNK){
+            return memo[index]==Visited.POSTIVE?true:false;
         }
         
-        if(memo[index] != Visited.UNK){
-            return memo[index]==Visited.GOOD?true:false;
+        if(index == nums.length-1){
+            memo[index] = Visited.POSTIVE;
+            return true;
         }
         
         int maxJump = nums[index];
         
-        for(int i=1; i<= maxJump; i++){
-            if(jump(index+i)){
-                memo[index+i]=Visited.GOOD;
+        for(int i=1; i<=maxJump; i++){
+            if(index+1 < nums.length && jump(nums, index+i, memo)){
+                memo[index+1]=Visited.POSTIVE;
                 return true;
             }
         }
         
-        memo[index] = Visited.BAD;
+        memo[index] = Visited.NEGATIVE;
         return false;
     }
 }
