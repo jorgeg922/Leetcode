@@ -16,11 +16,12 @@ class Solution {
         int currIndex = size - steps;
         boolean[] visited = new boolean[size];
         
-        List<Integer> ans = new ArrayList<>();
+        int[] ans = new int[size];
+        int p = 0;
         
         while(!visited[currIndex]){
             visited[currIndex] = true;
-            ans.add(nums[currIndex]);
+            ans[p++] = nums[currIndex];
             currIndex++;
             if(currIndex >= size){
                 currIndex = 0;
@@ -28,7 +29,7 @@ class Solution {
         }
         
         for(int i=0; i<size; i++){
-            nums[i]=ans.get(i);
+            nums[i]=ans[i];
         }
     }
 }
