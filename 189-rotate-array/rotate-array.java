@@ -1,16 +1,34 @@
 class Solution {
     public void rotate(int[] nums, int k) {
-        int kt = k % nums.length;       
-        reverse(nums, 0, nums.length-1);
-        reverse(nums,0,kt-1);
-        reverse(nums,kt,nums.length-1);
-    }
-    
-    public void reverse(int[] nums, int left, int right){
-        while(left < right){
-            int tmp = nums[left];
-            nums[left++] = nums[right];
-            nums[right--] = tmp;
+        int size = nums.length;
+        int steps = 0;
+        if(k > nums.length){
+            steps = k%size;
+        }else{
+            steps = k;
+        }
+        
+        if(steps == 0){
+            return;
+        }
+        
+        
+        int currIndex = size - steps;
+        boolean[] visited = new boolean[size];
+        
+        List<Integer> ans = new ArrayList<>();
+        
+        while(!visited[currIndex]){
+            visited[currIndex] = true;
+            ans.add(nums[currIndex]);
+            currIndex++;
+            if(currIndex >= size){
+                currIndex = 0;
+            }
+        }
+        
+        for(int i=0; i<size; i++){
+            nums[i]=ans.get(i);
         }
     }
 }
