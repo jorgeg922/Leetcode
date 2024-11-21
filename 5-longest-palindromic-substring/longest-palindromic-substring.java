@@ -1,41 +1,34 @@
 class Solution {
-    String s;
     public String longestPalindrome(String s) {
-        this.s = s;
-        if(s.length() == 1){
-            return s;
-        }
-        
+        int left = 0;
+        int right = s.length()-1;
         int maxLen = Integer.MIN_VALUE;
-        String maxPalindrome = "";
+        String ans = "";
+        
         for(int i=0; i<s.length(); i++){
-            String pal = expandAroundCenter(i,i);
-            String pal2 = expandAroundCenter(i,i+1);
+           
+            String len1 = expandAroundCenter(i,i,s);
+            String len2 = expandAroundCenter(i, i+1,s);
             
-            String tmpLongest = "";
-            if(pal.length() > pal2.length()){
-                tmpLongest = pal;
-            }else{
-                tmpLongest = pal2;
-            }
+            String localMax = len1.length()>len2.length()?len1:len2;
             
-            if(tmpLongest.length() > maxLen){
-                maxPalindrome = tmpLongest;
-                maxLen = tmpLongest.length();
+            if(localMax.length() > maxLen){
+                maxLen = localMax.length();
+                ans = localMax;
             }
+
         }
         
-        
-        return maxPalindrome;
+        return ans;
+    
     }
     
-    
-    public String expandAroundCenter(int left, int right){
-        while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)){
+    public String expandAroundCenter(int left, int right, String s){
+        while(left>=0 && right <=s.length()-1 && s.charAt(left) == s.charAt(right)){
             left--;
             right++;
         }
         
-        return s.substring(left+1,right);
+        return s.substring(left+1, right);
     }
 }
