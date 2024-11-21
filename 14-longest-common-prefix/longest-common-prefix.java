@@ -1,45 +1,50 @@
 class Solution {
     class Trie{
-        Map<Character,Trie> links = new HashMap<>();
         boolean isEndOfWord = false;
+        Map<Character,Trie> links = new HashMap<>();
         
         public void insert(String word){
-            Trie curr = this;
+            Trie trie = this;
             for(char c : word.toCharArray()){
-                if(curr.links.containsKey(c)){
-                    curr = curr.links.get(c);
-                    continue;
+                if(trie.links.containsKey(c)){
+                    trie = trie.links.get(c);
+                }else{
+                    trie.links.put(c, new Trie());
+                    trie = trie.links.get(c);
                 }
-                curr.links.put(c, new Trie());
-                curr = curr.links.get(c);
             }
-            curr.isEndOfWord = true;
+            
+            trie.isEndOfWord = true;
         }
         
-        public String searchForLongestPrefix(){
-            StringBuilder sb = new StringBuilder();           
+        public String search(){
             Trie curr = this;
             
+            if(links.size() > 1){
+                return "";
+            }
+            
+            StringBuilder sb = new StringBuilder();
             while(!curr.isEndOfWord){
                 if(curr.links.size() > 1){
                     return sb.toString();
                 }
-                for(Map.Entry<Character,Trie> link : curr.links.entrySet()){
-                    sb.append(link.getKey());
-                    curr = link.getValue();
+                for(Map.Entry<Character, Trie> entry : curr.links.entrySet()){
+                    sb.append(entry.getKey());
+                    curr = entry.getValue();
                 }
             }
             
             return sb.toString();
         }
-        
     }
+    
+    Trie myTrie = new Trie();
     public String longestCommonPrefix(String[] strs) {
-        Trie trie = new Trie();
         for(String str : strs){
-            trie.insert(str);
+            myTrie.insert(str);
         }
         
-        return trie.searchForLongestPrefix();
+        return myTrie.search();
     }
 }
