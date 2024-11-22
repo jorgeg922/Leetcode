@@ -1,34 +1,29 @@
 class Solution {
     List<String> ans;
-    int n;
     public List<String> generateParenthesis(int n) {
         ans = new ArrayList<>();
-        this.n = n;
         
-        generate(0, 0, new StringBuilder());
+        generate(0,0,n,new StringBuilder());
         
         return ans;
-        
     }
     
-    public void generate(int opening, int closing, StringBuilder sb){
-        if(sb.length() == n * 2){
+    public void generate(int open, int close, int n, StringBuilder sb){
+        if(open + close == n * 2){
             ans.add(sb.toString());
             return;
         }
         
-        if(opening < n){
+        if(open < n){
             sb.append('(');
-            generate(opening+1, closing, sb);
+            generate(open+1,close,n,sb);
             sb.deleteCharAt(sb.length()-1);
-
         }
         
-        if(closing < opening){
-            sb.append(')');          
-            generate(opening, closing+1, sb);
+        if(close < open){
+            sb.append(')');
+            generate(open,close+1,n,sb);
             sb.deleteCharAt(sb.length()-1);
-
         }
     }
 }
