@@ -1,11 +1,11 @@
 class Solution {
-    public int removeElement(int[] nums, int val) {        
-        int left=0;
-        int right=nums.length-1;
+    public int removeElement(int[] nums, int val) {
+       int left = 0;
+        int right = nums.length-1;
         
         while(left <= right){
             if(nums[left] == val){
-                swap(nums, left, right);
+                swap(left, right, nums);
                 right--;
                 continue;
             }
@@ -13,15 +13,12 @@ class Solution {
             left++;
         }
         
-        
         return left;
     }
     
-    
-    
-    public void swap(int[] nums, int left, int right){
-        int tmp = nums[left];
-        nums[left] = nums[right];
-        nums[right] = tmp;
+    public void swap(int a, int b, int[] nums){
+        int tmp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = tmp;
     }
 }
