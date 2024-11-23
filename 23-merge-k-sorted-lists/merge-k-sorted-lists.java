@@ -10,24 +10,43 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        PriorityQueue<ListNode> pq = new PriorityQueue<>((a,b)->a.val-b.val);
+        if(lists.length == 0){
+            return null;
+        }
+        ListNode node = lists[0];
         
-        for(ListNode list : lists){
-            ListNode head = list;
-            while(head != null){
-                ListNode node = new ListNode(head.val);
-                pq.add(node);
-                head = head.next;
-            }
+        for(int i=1; i<lists.length; i++){
+            ListNode currList = lists[i];
+            node = sort(node, currList);
         }
         
-        ListNode ans = new ListNode(-1);
-        ListNode tmp = ans;
-        while(!pq.isEmpty()){
-            tmp.next = pq.poll();
+        return node;
+    }
+    
+    public ListNode sort(ListNode nodeA, ListNode nodeB){
+        ListNode tmp = new ListNode(-1);
+        ListNode ans = tmp;
+        
+        while(nodeA != null && nodeB != null){
+            if(nodeA.val < nodeB.val){
+                tmp.next = nodeA;
+                nodeA = nodeA.next;
+            }else{
+                tmp.next = nodeB;
+                nodeB = nodeB.next;
+            }
             tmp = tmp.next;
         }
         
+        if(nodeA != null){
+            tmp.next = nodeA;
+        }
+        
+        if(nodeB != null){
+            tmp.next = nodeB;
+        }
+        
         return ans.next;
+        
     }
 }
