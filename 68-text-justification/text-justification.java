@@ -9,7 +9,7 @@ class Solution {
             sb.append(word);
             sb.append(" ");
             if(sb.length()-1 > maxWidth){
-                String justified = justify(sb.toString().substring(0, sb.length()-word.length()-2).trim()); 
+                String justified = justify(sb.toString().substring(0, sb.length()-word.length()-2)); 
                 //System.out.println(justified.length());
                 ans.add(justified);
                 sb = new StringBuilder();
