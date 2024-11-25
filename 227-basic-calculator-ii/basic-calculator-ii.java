@@ -10,12 +10,10 @@ class Solution {
             
             if(Character.isDigit(c)){
                 currentNumber = (currentNumber * 10) + (c - '0');
-                n+=1;
-            }else{  
-                n=0;
+                
             }
             
-            if((!Character.isDigit(c) && !Character.isWhitespace(c)) || i == s.length()-1){
+            if((!Character.isDigit(c) && !Character.isWhitespace(c))|| i == s.length()-1){
                     switch(operation){
                         case '-':
                             stack.push(-currentNumber);
