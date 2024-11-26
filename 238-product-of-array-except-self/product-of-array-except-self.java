@@ -1,30 +1,38 @@
 class Solution {
     public int[] productExceptSelf(int[] nums) {
+        if(nums.length == 1){
+            return nums;
+        }
+        
         int[] ans = new int[nums.length];
         int zeroCount = 0;
-        int zeroIndex = 0;
-        int total_product = 1;
+        int zeroIndex = -1;
+        int maxProduct = 1;
+        
         for(int i=0; i<nums.length; i++){
             if(nums[i] == 0){
                 zeroCount++;
                 zeroIndex = i;
                 continue;
             }
-            total_product *= nums[i];
+            maxProduct *= nums[i];    
         }
         
-        if(zeroCount >= 2){
-            //Arrays.fill(ans,0);
+        if(zeroCount > 1){
             return ans;
-        }else if(zeroCount == 1){
-            Arrays.fill(ans, 0);
-            ans[zeroIndex] = total_product;
+        }
+        
+        if(zeroCount == 1){
+            ans[zeroIndex] = maxProduct;
             return ans;
         }
         
         for(int i=0; i<nums.length; i++){
-            ans[i] = total_product/nums[i];
+            ans[i] = maxProduct/nums[i];
         }
+        
         return ans;
+        
+        
     }
 }
