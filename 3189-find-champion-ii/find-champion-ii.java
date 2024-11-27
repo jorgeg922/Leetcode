@@ -20,29 +20,9 @@ class Solution {
             } 
         }
         
-        PriorityQueue<Integer> pq = new PriorityQueue<>(new Comparator<>(){
-            public int compare(Integer a, Integer b){
-                if(graph.get(a) == null){
-                    return b;
-                }
-                if(graph.get(b) == null){
-                    return a;
-                }
-                return graph.get(b).size() - graph.get(a).size();
-            }
-        });
-        
-        for(int team : graph.keySet()){
-            if(graph.get(team) == null){
-                continue;
-            }
-            pq.add(team);
-        }
-        
-        while(!pq.isEmpty()){
-                int currentTeam = pq.poll();
-            if(graph.containsKey(currentTeam)){
-               removeWeakerTeams(currentTeam, graph);
+        for(int i=0; i<n; i++){
+            if(graph.containsKey(i)){
+               removeWeakerTeams(i, graph);
             }   
         }
         
