@@ -44,6 +44,9 @@ class Solution {
         
         for(int i=0; i<words.length; i++){
             String word = words[i];
+            if(word.length() < searchWord.length()){
+                continue;
+            }
             trie.insertWord(word,i);
         }
         
