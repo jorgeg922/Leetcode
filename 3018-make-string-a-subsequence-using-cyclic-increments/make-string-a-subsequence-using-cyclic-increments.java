@@ -23,10 +23,6 @@ class Solution {
             ptr1++;
         }
         
-        return ptr2==str2.length()?true:false;
-        
-        
+        return ptr2==str2.length()?true:false;          
     }
-    
-    
 }
