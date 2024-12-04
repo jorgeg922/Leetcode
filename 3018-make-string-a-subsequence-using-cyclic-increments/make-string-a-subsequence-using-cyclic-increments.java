@@ -4,17 +4,11 @@ class Solution {
             return false;
         }
         
-        return findSubSequence(str1, 0, str2, 0);
+        int ptr1=0;
+        int ptr2=0;
         
-    }
-    
-    public boolean findSubSequence(String str1, int index1, String str2, int index2){
-        if(index2 == str2.length()){
-            return true;
-        }
-        
-        for(int i=index1; i<str1.length(); i++){
-            char current = str1.charAt(i);
+        while(ptr1 < str1.length() && ptr2 < str2.length()){
+            char current = str1.charAt(ptr1);
             char next = ' ';
             if(current == 'z'){
                 next = 'a';
@@ -22,11 +16,17 @@ class Solution {
                 next = (char) (current + 1);
             }
             
-            if(current == str2.charAt(index2) || next == str2.charAt(index2)){
-                return findSubSequence(str1, i+1, str2, index2+1);
+            if(current == str2.charAt(ptr2) || next == str2.charAt(ptr2)){
+                ptr2++;
             }
+            
+            ptr1++;
         }
         
-        return false;
+        return ptr2==str2.length()?true:false;
+        
+        
     }
+    
+    
 }
