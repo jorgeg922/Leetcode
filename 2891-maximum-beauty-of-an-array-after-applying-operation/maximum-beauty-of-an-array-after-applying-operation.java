@@ -1,8 +1,8 @@
 class Solution {
     public int maximumBeauty(int[] nums, int k) {
-        if(nums.length == 1){
-            return 1;
-        }
+        //if(nums.length == 1){
+        //    return 1;
+        //}
         
         int maxValue = 0;
         
@@ -24,6 +24,6 @@ class Solution {
             maxSeq = Math.max(maxSeq, runningSum);
         }
         
-        return maxSeq;
+        return maxSeq==0?1:maxSeq;
     }
 }
