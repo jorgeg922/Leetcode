@@ -9,11 +9,11 @@ class Solution {
         this.target = target;
         memo = new HashMap<>();
        
-        int ways=findWays(0, 0, new StringBuilder());
+        int ways=findWays(0, 0);
         return ways;
     }
     
-    public int findWays(int index, int sum, StringBuilder expression){
+    public int findWays(int index, int sum){
         if(index == nums.length){
             return sum == target ? 1 : 0;
         }
@@ -26,17 +26,16 @@ class Solution {
         
         int ways = 0;
         for(int choice : choices){
-            expression.append(choice);
-            expression.append(nums[index]);
+            
             switch(choice){
                 case '-':
                     sum += (nums[index] * -1);
-                    ways += findWays(index+1, sum, expression);
+                    ways += findWays(index+1, sum);
                     sum -= (nums[index] * -1);
                     break;
                 case '+':
                     sum += (nums[index]);
-                    ways += findWays(index+1, sum, expression);
+                    ways += findWays(index+1, sum);
                     sum -= (nums[index] * -1);
                     break;
             }      
