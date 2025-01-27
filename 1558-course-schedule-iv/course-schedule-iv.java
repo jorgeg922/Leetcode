@@ -1,48 +1,28 @@
+import java.util.*;
+
 class Solution {
     public List<Boolean> checkIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) {
-        List<Boolean> ans = new ArrayList<Boolean>();
-        Map<Integer, Set<Integer>> pr = new HashMap<>();
+        // Step 1: Initialize reachability matrix
+        boolean[][] reachable = new boolean[numCourses][numCourses];
 
-        for(int i=0; i<numCourses; i++){
-            pr.put(i, new HashSet<>());
+        // Step 2: Populate the matrix based on direct prerequisites
+        for (int[] prereq : prerequisites) {
+            reachable[prereq[0]][prereq[1]] = true;
         }
 
-        for(int[] prereq : prerequisites){
-
-            int next = prereq[1];
-            int prev = prereq[0];           
-
-            pr.get(next).add(prev);
-        }
-
-        for(int[] query: queries){
-            int course = query[0];
-            int targetCourse = query[1];
-
-            Queue<Integer> q = new LinkedList<>();
-            q.add(targetCourse);
-            Set<Integer> visited = new HashSet<>();
-           
-
-            boolean isItPrereq = false;
-            while(!q.isEmpty()){
-                Set<Integer> prereqs = pr.get(q.poll());
-                
-                if(prereqs.contains(course)){
-                    isItPrereq = true;
-                    break;
+        // Step 3: Use Floyd-Warshall to compute transitive closure
+        for (int k = 0; k < numCourses; k++) {
+            for (int i = 0; i < numCourses; i++) {
+                for (int j = 0; j < numCourses; j++) {
+                    reachable[i][j] = reachable[i][j] || (reachable[i][k] && reachable[k][j]);
                 }
-
-                for(int prereq : prereqs){
-                    if(!visited.contains(prereq)){
-                        q.add(prereq);
-                        visited.add(prereq);
-                    }
-                }
-               
             }
+        }
 
-            ans.add(isItPrereq);
+        // Step 4: Answer queries
+        List<Boolean> ans = new ArrayList<>();
+        for (int[] query : queries) {
+            ans.add(reachable[query[0]][query[1]]);
         }
 
         return ans;
