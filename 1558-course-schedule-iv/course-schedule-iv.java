@@ -22,7 +22,7 @@ class Solution {
             Queue<Integer> q = new LinkedList<>();
             q.add(targetCourse);
             Set<Integer> visited = new HashSet<>();
-            visited.add(targetCourse);
+           
 
             boolean isItPrereq = false;
             while(!q.isEmpty()){
