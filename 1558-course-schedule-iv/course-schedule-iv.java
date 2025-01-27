@@ -1,10 +1,10 @@
 class Solution {
     public List<Boolean> checkIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) {
         List<Boolean> ans = new ArrayList<Boolean>();
-        Map<Integer, List<Integer>> pr = new HashMap<>();
+        Map<Integer, Set<Integer>> pr = new HashMap<>();
 
         for(int i=0; i<numCourses; i++){
-            pr.put(i, new ArrayList<>());
+            pr.put(i, new HashSet<>());
         }
 
         for(int[] prereq : prerequisites){
@@ -26,9 +26,8 @@ class Solution {
 
             boolean isItPrereq = false;
             while(!q.isEmpty()){
-                List<Integer> prereqs = pr.get(q.poll());
+                Set<Integer> prereqs = pr.get(q.poll());
                 
-
                 if(prereqs.contains(course)){
                     isItPrereq = true;
                     break;
