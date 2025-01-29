@@ -63,8 +63,6 @@ class LRUCache {
     }
 
     public Node removeNode(Node node){
-        System.out.println(node.key);
-        System.out.println(node.value);
         node.prev.next = node.next;
         node.next.prev = node.prev;
         node.next = null;
