@@ -12,26 +12,15 @@ class Solution {
     }
     int[][] direction = new int[][]{{0,1}, {-1,0}, {0,-1}, {1, 0}};
     public boolean isRobotBounded(String instructions) {
-        int numberOfSimulations = instructions.length();
         
         Robot robot = new Robot(0,0,0);
     
         for(int i=0; i<4; i++){
             for(char c : instructions.toCharArray()){
-                performAction(robot, c);
-                System.out.println("Robot X: " + robot.x);
-                System.out.println("Robot Y: " + robot.y);
-                System.out.println("Facing: " + robot.i);
-            }
-            
-            
+                performAction(robot, c);               
+            }           
         }
 
-        //if(instructions.charAt(instructions.length()-1) != 'G'){
-        //    performAction(robot, instructions.charAt(0));
-        //}
-
-        System.out.printf("Final Location: %s, %s", robot.x, robot.y);
         if(robot.x == 0 && robot.y == 0){
             return true;
         }
