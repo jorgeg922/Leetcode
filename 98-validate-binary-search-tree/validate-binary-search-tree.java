@@ -27,8 +27,8 @@ class Solution {
             return false;
         }
 
-        boolean left = isValid(node.left, floor, Math.min(ceiling, node.val));
-        boolean right = isValid(node.right, Math.max(floor, node.val), ceiling);
+        boolean left = isValid(node.left, floor, (long) node.val);
+        boolean right = isValid(node.right,  (long) node.val, ceiling);
 
         return left && right;
     }
