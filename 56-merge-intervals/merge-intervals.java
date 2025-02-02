@@ -1,38 +1,34 @@
 class Solution {
     public int[][] merge(int[][] intervals) {
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)-> a[0] - b[0]);
         Deque<int[]> q = new LinkedList<>();
-        
-        Arrays.sort(intervals, new Comparator<>(){
-            public int compare(int[] a, int[] b){
-                return a[0] - b[0];
-            }
-        });
-        
+
         for(int[] interval : intervals){
-            if(q.isEmpty()){
-                q.addFirst(interval);
-                continue;
-            }
-            
-            int lastEntryStart = q.peekLast()[0];
-            int lastEntryEnd = q.peekLast()[1];
-            
-            if(interval[0] > lastEntryEnd){
-                q.addLast(interval);
-            }else if(interval[1] > lastEntryEnd){
-                q.getLast()[1] = interval[1];
-            }
-            
+            pq.add(interval);
         }
-        
+
+        while(!pq.isEmpty()){
+            int[] curr = pq.poll();
+            if(q.size() == 0){
+                q.addLast(curr);
+            }else{
+                int[] prev = q.peekLast();
+
+                if(curr[0] <= prev[1]){
+                    prev[1] = Math.max(prev[1], curr[1]);
+                }else{
+                    q.addLast(curr);
+                }
+            }
+        }
+
         int[][] ans = new int[q.size()][2];
-        int i = 0;
-        
+        int ptr = 0;
+
         while(!q.isEmpty()){
-            ans[i] = q.pollFirst();
-            i++;
+            ans[ptr++] = q.poll();
         }
-        
+
         return ans;
     }
 }
