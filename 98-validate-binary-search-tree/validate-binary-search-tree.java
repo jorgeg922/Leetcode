@@ -18,7 +18,7 @@ class Solution {
         return isValid(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    public boolean isValid(TreeNode node, Long floor, Long ceiling){
+    public boolean isValid(TreeNode node, long floor, long ceiling){
         if(node == null){
             return true;
         }
@@ -27,8 +27,8 @@ class Solution {
             return false;
         }
 
-        boolean left = isValid(node.left, floor, (long) node.val);
-        boolean right = isValid(node.right,  (long) node.val, ceiling);
+        boolean left = isValid(node.left, floor,  node.val);
+        boolean right = isValid(node.right,  node.val, ceiling);
 
         return left && right;
     }
