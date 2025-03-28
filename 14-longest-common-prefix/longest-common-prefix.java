@@ -1,50 +1,48 @@
 class Solution {
     class Trie{
-        boolean isEndOfWord = false;
-        Map<Character,Trie> links = new HashMap<>();
-        
-        public void insert(String word){
-            Trie trie = this;
-            for(char c : word.toCharArray()){
-                if(trie.links.containsKey(c)){
-                    trie = trie.links.get(c);
-                }else{
-                    trie.links.put(c, new Trie());
-                    trie = trie.links.get(c);
-                }
-            }
-            
-            trie.isEndOfWord = true;
+        Map<Character, Trie> branch;
+        boolean isEndOfString;
+
+        public Trie(){
+            branch = new HashMap<>();
+            isEndOfString = false;
         }
-        
-        public String search(){
-            Trie curr = this;
-            
-            if(links.size() > 1){
-                return "";
+
+        public void insertWord(String word){
+            Trie currentTrie = this;
+
+            for(char c : word.toCharArray()){
+                if(currentTrie.branch.containsKey(c)){
+                    currentTrie = currentTrie.branch.get(c);
+                }else{
+                    currentTrie.branch.put(c, new Trie());
+                    currentTrie = currentTrie.branch.get(c);
+                }
             }
-            
+            currentTrie.isEndOfString = true;
+        }
+
+        public String findLongestPrefix(){
             StringBuilder sb = new StringBuilder();
-            while(!curr.isEndOfWord){
-                if(curr.links.size() > 1){
-                    return sb.toString();
-                }
-                for(Map.Entry<Character, Trie> entry : curr.links.entrySet()){
+            Trie currentTrie = this;
+
+            while(currentTrie.branch.size() == 1 && !currentTrie.isEndOfString){
+                for(Map.Entry<Character, Trie> entry : currentTrie.branch.entrySet()){
                     sb.append(entry.getKey());
-                    curr = entry.getValue();
+                    currentTrie = entry.getValue();
                 }
             }
-            
+
             return sb.toString();
         }
     }
-    
-    Trie myTrie = new Trie();
     public String longestCommonPrefix(String[] strs) {
-        for(String str : strs){
-            myTrie.insert(str);
+        Trie trie = new Trie();
+
+        for(String s : strs){
+            trie.insertWord(s);
         }
-        
-        return myTrie.search();
+
+        return trie.findLongestPrefix();
     }
 }
