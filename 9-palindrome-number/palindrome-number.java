@@ -1,18 +1,19 @@
 class Solution {
     public boolean isPalindrome(int x) {
-        String num = String.valueOf(x);
-        
-        if(num.charAt(0)=='-'){
-            return false;
+        String number = Integer.toString(x);
+
+        int left = 0;
+        int right = number.length()-1;
+
+        while(left < right){
+            if(number.charAt(left) != number.charAt(right)){
+                return false;
+            }
+
+            left++;
+            right--;
         }
-        
-        StringBuilder sb = new StringBuilder(num);
-        sb.reverse();
-        
-        if(sb.toString().equals(num)){
-            return true;
-        }
-        
-        return false;
+
+        return true;
     }
 }
