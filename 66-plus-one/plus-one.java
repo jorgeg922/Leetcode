@@ -1,24 +1,25 @@
 class Solution {
     public int[] plusOne(int[] digits) {
-
         int len = digits.length;
-        int[] ans = new int[len+1];;
-        
-
-        int ptr = ans.length - 1;
-        int add = 1;
-
+        int carry = 1;
         for(int i=len-1; i>=0; i--){
-            int newDigit = (digits[i] + add) % 10;
-            add = (digits[i] + add) / 10;
-            ans[ptr--] = newDigit;
+            int newDigit = (digits[i] + carry) % 10;
+            carry = (digits[i] + carry)/10;
+            digits[i] = newDigit;
+
+            if(carry == 0){
+                return digits;
+            }
         }
 
-        if(add != 0){
-            ans[ptr--] = add;
+        
+        int[] ans = new int[len+1];
+        ans[0] = carry;
+        for(int i=0; i<len; i++){
+            ans[i+1] = digits[i];
         }
-
-        return ans[0] == 0 ? Arrays.copyOfRange(ans, 1, ans.length) : ans; 
+        return ans;
+    
 
     }
 }
