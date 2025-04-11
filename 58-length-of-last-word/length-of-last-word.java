@@ -1,8 +1,17 @@
 class Solution {
     public int lengthOfLastWord(String s) {
-        String[] words = s.split("\\W+");
+        int wordBegin = s.length()-1;
 
-        return words[words.length-1].length();
+        while(wordBegin >= 0 && Character.isWhitespace(s.charAt(wordBegin))){
+            wordBegin--;
+        }
+
+        int wordEnd = wordBegin;
+        while(wordEnd >= 0 && !Character.isWhitespace(s.charAt(wordEnd))){
+            wordEnd--;
+        }
+
+        return wordBegin - wordEnd;
 
     }
 }
